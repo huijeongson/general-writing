@@ -1,946 +1,272 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SUMMIT 글쓰기 AI 평가 프로토타입</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>눈높이 성장판</title>
 <style>
   :root {
-    --green-bg: #EBF7E3;
-    --green-mid: #C8EDAF;
-    --green-main: #4CAF50;
-    --green-dark: #2E7D32;
-    --green-btn: #5CB85C;
-    --gray-text: #444;
-    --gray-sub: #777;
-    --white: #fff;
-    --card-bg: #fff;
-    --border: #D6ECC8;
-    --yellow: #F5C842;
-    --orange: #F47B30;
-    --pink: #E86B8A;
-    --blue: #5B9BD5;
-    --radius: 16px;
-    --radius-sm: 10px;
+    --cream: #f7f0e4;
+    --ink: #1f2a22;
+    --mute: #6b7a6f;
+    --green: #2e9e63;
+    --green-deep: #1d7a4a;
+    --mint: #e3f4e9;
+    --mint-deep: #bfe6cd;
+    --teal: #3cb8a8;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #F5FAF0; color: var(--gray-text); }
+  * { margin: 0; box-sizing: border-box; word-break: keep-all; font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body { background: #e9e2d2; display: flex; align-items: center; justify-content: center; }
+  .app {
+    width: 100%; max-width: 480px; height: 100dvh; max-height: 980px;
+    background: #fff; position: relative; overflow: hidden;
+    box-shadow: 0 0 50px rgba(31,42,34,.15);
+  }
+  @media (min-width: 520px) { .app { border-radius: 22px; height: 92dvh; } }
+  .screen { position: absolute; inset: 0; display: none; flex-direction: column; }
+  .screen.on { display: flex; }
 
-  /* ── 공통 ── */
-  .screen { display: none; min-height: 100vh; flex-direction: column; }
-  .screen.active { display: flex; }
+  /* ───── 1. 성장판 로그인 ───── */
+  .scr-login { background: #fff; }
+  .login-hero {
+    height: 32%; min-height: 230px; position: relative; overflow: hidden;
+    background: radial-gradient(circle at 78% 40%, #b7eccb 0%, #d9f4e2 45%, #eefaf2 100%);
+    display: flex; flex-direction: column; justify-content: center; padding: 0 30px;
+  }
+  .login-hero h2 { font-size: 28px; font-weight: 800; line-height: 1.3; color: #2b3a2f; }
+  .login-hero h2 .g { color: var(--green); }
+  .login-hero .speech { display: inline-block; margin-top: 13px; background: #fff; border-radius: 99px; padding: 7px 15px; font-size: 12.5px; font-weight: 600; color: #3c5244; width: fit-content; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
+  .login-hero img { position: absolute; right: 16px; bottom: 12px; width: 132px; }
+  .login-body { flex: 1; padding: 40px 38px 0; }
+  .login-logo { text-align: center; font-size: 18px; font-weight: 800; margin-bottom: 28px; }
+  .login-logo .dot { color: #e23b3b; }
+  .tabs { display: flex; border-bottom: 1.5px solid #e3e3da; margin-bottom: 18px; }
+  .tab { flex: 1; text-align: center; padding: 12px 0; font-size: 13.5px; font-weight: 700; color: #9aa39c; }
+  .tab.on { color: var(--ink); border: 1.5px solid #e3e3da; border-bottom: 2px solid #fff; border-radius: 8px 8px 0 0; margin-bottom: -1.5px; }
+  .login-input { width: 100%; border: 1.5px solid #ddd; border-radius: 8px; padding: 14px; font-size: 13.5px; color: #888; margin-bottom: 16px; }
+  .btn-login { width: 100%; background: var(--green); color: #fff; border: none; border-radius: 99px; padding: 15px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .btn-login:active { background: var(--green-deep); }
+  .login-ver { position: absolute; bottom: 12px; right: 18px; font-size: 11px; color: #b9b9ae; }
 
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px; background: var(--white);
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 10;
+  /* ───── 2·5. 마이클래스 ───── */
+  .scr-myclass { background: var(--cream); flex-direction: row !important; }
+  .gnb { width: 64px; background: var(--green); display: flex; flex-direction: column; align-items: center; padding-top: 20px; gap: 28px; flex-shrink: 0; }
+  .gnb .burger { width: 22px; }
+  .gnb .burger div { height: 2.5px; background: #fff; border-radius: 2px; margin: 4px 0; }
+  .gnb .ico { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; }
+  .gnb .ico.on { background: var(--cream); }
+  .mc-body { flex: 1; overflow-y: auto; padding: 22px 20px 30px; }
+  .mc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .mc-top h2 { font-size: 19px; font-weight: 800; }
+  .mc-top span { font-size: 11.5px; color: var(--mute); }
+  .mc-greet { font-size: 18px; font-weight: 800; line-height: 1.45; margin-bottom: 20px; }
+  .mc-greet small { display: block; font-weight: 500; font-size: 14.5px; color: #4d5c51; }
+  .subj-card { background: #fff; border-radius: 18px; padding: 22px 20px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(31,42,34,.05); }
+  .subj-head h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+  .subj-msg { font-size: 13px; color: var(--mute); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+  .subj-msg .face { width: 24px; height: 24px; border-radius: 50%; background: #8fdc9f; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .sets { display: flex; gap: 9px; }
+  .set-pill {
+    flex: 1; border: 1.5px solid #d8d8cd; background: #f4f4ec; border-radius: 99px;
+    padding: 12px 6px; font-size: 13px; font-weight: 700; text-align: center; cursor: pointer; color: #5a665d;
   }
-  .topbar-logo { display: flex; align-items: center; gap: 8px; }
-  .logo-icon {
-    width: 32px; height: 32px; background: var(--green-main);
-    border-radius: 8px; display: flex; align-items: center; justify-content: center;
-  }
-  .logo-icon svg { width: 18px; height: 18px; }
-  .logo-text { font-size: 15px; font-weight: 700; color: var(--green-dark); line-height: 1.2; }
-  .logo-sub { font-size: 10px; color: var(--gray-sub); font-weight: 400; }
-  .btn-login {
-    padding: 8px 20px; border-radius: 24px; border: 2px solid var(--green-dark);
-    background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; cursor: pointer;
-  }
-  .btn-login:hover { background: var(--green-dark); color: #fff; }
+  .set-pill.active { background: #fff; border-color: var(--green); color: var(--ink); box-shadow: 0 3px 0 #d3ecd9; }
+  .set-pill.active .tag { background: #a5e3a2; border-radius: 99px; font-size: 10.5px; padding: 2px 7px; margin-left: 4px; }
+  .set-pill:active { border-color: var(--green); }
+  .subj-card.dim { opacity: .62; }
+  .subj-card.dim .weekbtn { width: 100%; border: 1.5px solid var(--green); background: #fff; color: var(--ink); border-radius: 99px; padding: 12px; font-size: 13.5px; font-weight: 700; }
 
-  .content { flex: 1; padding: 0 20px 40px; max-width: 480px; margin: 0 auto; width: 100%; }
+  .updating-banner {
+    display: none; background: #fff; border: 1.5px solid var(--mint-deep); border-radius: 14px;
+    padding: 15px 16px; margin-bottom: 14px; align-items: center; gap: 13px;
+  }
+  .updating-banner.on { display: flex; }
+  .updating-banner .sp { width: 22px; height: 22px; border: 3px solid var(--mint-deep); border-top-color: var(--green); border-radius: 50%; animation: spin .9s linear infinite; flex-shrink: 0; }
+  .updating-banner b { font-size: 13.5px; }
+  .updating-banner small { display: block; font-size: 11.5px; color: var(--mute); margin-top: 3px; }
 
-  .btn-primary {
-    width: 100%; padding: 16px; border-radius: 32px; border: none;
-    background: var(--green-btn); color: #fff; font-size: 17px; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: background .2s;
-  }
-  .btn-primary:hover { background: var(--green-dark); }
-  .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-
-  .btn-secondary {
-    width: 100%; padding: 14px; border-radius: 32px; border: 2px solid var(--green-main);
-    background: transparent; color: var(--green-main); font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: all .2s;
-  }
-  .btn-secondary:hover { background: var(--green-main); color: #fff; }
-
-  /* ── S0: 랜딩 ── */
-  #s0 { background: var(--green-bg); }
-  .hero-area {
-    background: linear-gradient(160deg, #D4F0BA 0%, #EBF7E3 60%, #F5FAF0 100%);
-    padding: 40px 20px 0; position: relative; overflow: hidden; min-height: 280px;
-    display: flex; align-items: flex-end; justify-content: center;
-  }
-  .hero-illustration { font-size: 100px; text-align: center; margin-bottom: -8px; }
-  .hero-deco {
-    position: absolute; top: 30px; left: 30px;
-    width: 18px; height: 24px; background: var(--yellow); clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    opacity: .8;
-  }
-  .hero-deco2 {
-    position: absolute; top: 50px; left: 50px;
-    width: 12px; height: 16px; background: var(--yellow); clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    opacity: .5;
-  }
-  .hero-body { padding: 32px 20px 0; text-align: center; }
-  .hero-title { font-size: 26px; font-weight: 800; line-height: 1.4; color: #1a1a1a; }
-  .hero-title em { color: var(--green-main); font-style: normal; }
-  .hero-desc { font-size: 14px; color: var(--gray-sub); margin-top: 8px; line-height: 1.6; }
-  .feature-cards {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 12px; margin: 28px 20px;
-    background: var(--white); border-radius: var(--radius); padding: 20px 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  }
-  .feat-item { text-align: center; }
-  .feat-icon {
-    width: 40px; height: 40px; border-radius: 10px; margin: 0 auto 8px;
-    display: flex; align-items: center; justify-content: center; font-size: 20px;
-  }
-  .feat-icon.a { background: #E8F4FF; }
-  .feat-icon.b { background: #FFF3E0; }
-  .feat-icon.c { background: #F3E8FF; }
-  .feat-icon.d { background: #E8F5E9; }
-  .feat-label { font-size: 12px; font-weight: 700; color: #222; line-height: 1.3; }
-  .feat-desc { font-size: 10px; color: var(--gray-sub); margin-top: 2px; }
-  .landing-cta { padding: 0 20px 32px; }
-
-  /* ── S1: 마카다미아 로그인 ── */
-  #s1 { background: #fafafa; }
-  .maca-login-wrap {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 48px 0 32px;
-  }
-  .maca-logo-area { text-align: center; margin-bottom: 48px; }
-  .maca-brand { font-size: 11px; color: #999; letter-spacing: 1px; margin-bottom: 4px; }
-  .maca-logo-text {
-    font-size: 32px; font-weight: 900; letter-spacing: -1px; color: #1a1a1a;
-    display: flex; align-items: center; gap: 2px;
-  }
-  .maca-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-bottom: 14px; }
-  .maca-dot-1 { background: #F47B30; }
-  .maca-dot-2 { background: #F5C842; }
-  .maca-dot-3 { background: #4CAF50; }
-  .maca-dot-4 { background: #5B9BD5; }
-  .maca-dots-row { display: flex; gap: 4px; justify-content: center; margin-top: 2px; }
-
-  .maca-form-wrap { width: 100%; }
-  .maca-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 24px; }
-  .maca-input {
-    width: 100%; padding: 16px 18px; border: 1.5px solid #E8E8E8;
-    border-radius: 12px; font-size: 15px; outline: none; background: #F2F5FB;
-    font-family: inherit; color: #1a1a1a; margin-bottom: 10px;
-    transition: border .2s, background .2s;
-  }
-  .maca-input:focus { border-color: #F47B30; background: #fff; }
-  .maca-save-id {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 13px; color: #888; margin-bottom: 24px; cursor: pointer;
-  }
-  .maca-check-icon { color: #F47B30; font-size: 16px; }
-  .maca-btn-row { display: flex; gap: 10px; margin-bottom: 16px; }
-  .maca-btn-outline {
-    flex: 1; padding: 16px; border-radius: 32px; border: 2px solid #F47B30;
-    background: transparent; color: #F47B30; font-size: 16px; font-weight: 700;
-    cursor: pointer; transition: all .2s;
-  }
-  .maca-btn-outline:hover { background: #FFF3EC; }
-  .maca-btn-fill {
-    flex: 1; padding: 16px; border-radius: 32px; border: none;
-    background: #F47B30; color: #fff; font-size: 16px; font-weight: 700;
-    cursor: pointer; transition: background .2s;
-  }
-  .maca-btn-fill:hover { background: #D4621A; }
-  .maca-links {
-    display: flex; justify-content: center; gap: 0; margin-bottom: 32px;
-  }
-  .maca-link { font-size: 13px; color: #888; cursor: pointer; padding: 0 14px; }
-  .maca-link:not(:last-child) { border-right: 1px solid #ddd; }
-  .maca-link:hover { color: #F47B30; }
-  .maca-sns-box {
-    display: flex; align-items: center; justify-content: space-between;
-    border: 1.5px solid #E8E8E8; border-radius: 16px; padding: 16px 20px;
-    background: #fff; cursor: pointer;
-  }
-  .maca-sns-label { font-size: 14px; color: #555; font-weight: 500; }
-  .maca-sns-icons { display: flex; align-items: center; gap: 10px; }
-  .sns-n { font-size: 18px; font-weight: 900; color: #03C75A; font-family: sans-serif; }
-  .sns-k { font-size: 20px; }
-  .sns-g { font-size: 18px; font-weight: 700; }
-  .sns-a { font-size: 18px; }
-  .sns-arrow { font-size: 16px; color: #bbb; margin-left: 4px; }
-
-  /* ── S2: 장르 선택 ── */
-  #s2 { background: #F5FAF0; }
-  .section-header { padding: 28px 0 20px; }
-  .section-title { font-size: 20px; font-weight: 800; color: #1a1a1a; }
-  .section-sub { font-size: 13px; color: var(--gray-sub); margin-top: 4px; }
-  .badge-step {
-    display: inline-block; background: var(--green-main); color: #fff;
-    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
-  }
-  .genre-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
-  .genre-card {
-    background: var(--white); border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 16px 14px; cursor: pointer; transition: all .2s;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .genre-card:hover { border-color: var(--green-main); box-shadow: 0 2px 10px rgba(76,175,80,.15); }
-  .genre-card.selected { border-color: var(--green-main); background: #F0FBF0; }
-  .genre-card.selected .genre-check { opacity: 1; }
-  .genre-emoji { font-size: 24px; }
-  .genre-info { flex: 1; }
-  .genre-name { font-size: 14px; font-weight: 700; color: #222; }
-  .genre-desc { font-size: 11px; color: var(--gray-sub); margin-top: 2px; }
-  .genre-check { width: 20px; height: 20px; border-radius: 50%; background: var(--green-main); opacity: 0; display: flex; align-items: center; justify-content: center; transition: opacity .2s; flex-shrink: 0; }
-  .genre-check::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
-
-  /* ── S3: 글쓰기 입력 ── */
-  #s3 { background: #F5FAF0; }
-  .upload-area {
-    background: var(--white); border: 2px dashed var(--green-mid); border-radius: var(--radius);
-    padding: 32px 20px; text-align: center; margin-bottom: 16px; cursor: pointer;
-    transition: all .2s;
-  }
-  .upload-area:hover { border-color: var(--green-main); background: #F8FDF5; }
-  .upload-icon { font-size: 40px; margin-bottom: 8px; }
-  .upload-text { font-size: 14px; font-weight: 600; color: #333; }
-  .upload-sub { font-size: 12px; color: var(--gray-sub); margin-top: 4px; }
-  .divider-or { text-align: center; font-size: 12px; color: var(--gray-sub); margin: 12px 0; position: relative; }
-  .divider-or::before, .divider-or::after {
-    content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border);
-  }
-  .divider-or::before { left: 0; }
-  .divider-or::after { right: 0; }
-  .textarea-wrap { position: relative; margin-bottom: 16px; }
-  .write-textarea {
-    width: 100%; height: 180px; padding: 16px; border: 1.5px solid var(--border);
-    border-radius: var(--radius); font-size: 14px; line-height: 1.7; resize: none; outline: none;
-    font-family: inherit; transition: border .2s;
-  }
-  .write-textarea:focus { border-color: var(--green-main); }
-  .char-count { text-align: right; font-size: 11px; color: var(--gray-sub); margin-top: 4px; }
-  .info-box {
-    background: #F0FBF0; border-radius: var(--radius-sm); padding: 12px 14px;
-    font-size: 12px; color: #2E7D32; line-height: 1.6; margin-bottom: 20px;
-  }
-
-  /* ── S4: 평가 중 ── */
-  #s4 { background: var(--green-bg); justify-content: center; align-items: center; }
-  .loading-wrap { text-align: center; padding: 40px 20px; }
-  .loading-animation {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: conic-gradient(var(--green-main) 0%, var(--green-mid) 60%, transparent 100%);
-    margin: 0 auto 24px; animation: spin 1.2s linear infinite;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .loading-inner {
-    width: 60px; height: 60px; background: var(--green-bg); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 24px;
-  }
+  /* ───── 3. 학습앱 실행 + 4. 팝업 ───── */
+  .scr-launch { background: #5b5f63; align-items: center; justify-content: center; }
+  .launch-label { color: #c9cdd0; font-size: 12.5px; margin-bottom: 14px; }
+  .launch-app { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 24px; }
+  .spinner { width: 36px; height: 36px; border: 3.5px solid rgba(255,255,255,.25); border-top-color: #fff; border-radius: 50%; animation: spin .9s linear infinite; }
+  .launch-sub { color: #d6dadd; font-size: 13px; font-weight: 600; margin-top: 18px; min-height: 18px; font-variant-numeric: tabular-nums; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-title { font-size: 20px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
-  .loading-desc { font-size: 13px; color: var(--gray-sub); line-height: 1.6; }
-  .loading-steps { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; text-align: left; max-width: 280px; margin-left: auto; margin-right: auto; }
-  .step-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--gray-sub); }
-  .step-item.done { color: var(--green-dark); font-weight: 600; }
-  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
-  .step-item.done .step-dot { background: var(--green-main); }
-  .step-item.active .step-dot { background: var(--green-main); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }
 
-  /* ── S5: 결과 리포트 ── */
-  #s5 { background: #F5FAF0; }
-  .result-header {
-    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-main) 100%);
-    padding: 28px 20px 24px; color: #fff; text-align: center;
-  }
-  .result-genre-tag {
-    display: inline-block; background: rgba(255,255,255,.2); border-radius: 20px;
-    padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 12px;
-  }
-  .result-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-  .result-sub { font-size: 12px; opacity: .8; }
-  .score-circle-wrap { margin: 20px 0 4px; display: flex; justify-content: center; }
-  .score-circle {
-    width: 90px; height: 90px; border-radius: 50%;
-    background: rgba(255,255,255,.15); border: 4px solid rgba(255,255,255,.5);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-  }
-  .score-num { font-size: 28px; font-weight: 900; }
-  .score-label { font-size: 11px; opacity: .8; }
-  .result-content { padding: 20px 20px 40px; }
-  .section-card {
-    background: var(--white); border-radius: var(--radius); padding: 18px;
-    margin-bottom: 14px; box-shadow: 0 1px 6px rgba(0,0,0,.05);
-  }
-  .card-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
-  .card-title-icon { font-size: 16px; }
-  .criteria-list { display: flex; flex-direction: column; gap: 12px; }
-  .criteria-item {}
-  .criteria-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-  .criteria-name { font-size: 13px; font-weight: 600; color: #333; }
-  .criteria-score { font-size: 13px; font-weight: 700; color: var(--green-dark); }
-  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 3px; background: var(--green-main); transition: width 1s ease; }
-  .progress-fill.mid { background: var(--yellow); }
-  .progress-fill.low { background: var(--orange); }
-  .criteria-comment { font-size: 11px; color: var(--gray-sub); margin-top: 4px; line-height: 1.5; }
-  .total-comment {
-    background: #F0FBF0; border-left: 3px solid var(--green-main);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 14px; font-size: 13px; color: #333; line-height: 1.7;
-  }
-  .result-cta { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .pop-dim { position: absolute; inset: 0; background: rgba(0,0,0,.42); display: none; align-items: center; justify-content: center; padding: 0 24px; }
+  .pop-dim.on { display: flex; }
+  .pop { width: 100%; max-width: 350px; background: #fff; border-radius: 16px; overflow: hidden; text-align: center; box-shadow: 0 14px 36px rgba(0,0,0,.3); }
+  .pop h3 { font-size: 20px; font-weight: 800; padding: 30px 24px 14px; }
+  .pop .msg { font-size: 14px; color: #4a4a4a; line-height: 1.65; padding: 0 26px 28px; white-space: pre-wrap; }
+  .pop .btns { display: flex; }
+  .pop .btns button { flex: 1; border: none; padding: 18px 0; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .btn-later { background: #ececec; color: #444; }
+  .btn-update { background: var(--teal); color: #fff; }
+  .btn-update:active { background: #319c8e; }
 
-  /* 뒤로가기 */
-  .back-btn {
-    background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-sub);
-    padding: 2px 4px;
-  }
+  /* ───── 6. 학습 시작 ───── */
+  .scr-run { background: linear-gradient(165deg, #2e9e63, #1d7a4a); align-items: center; justify-content: center; color: #fff; text-align: center; padding: 0 40px; }
+  .scr-run .face { font-size: 48px; margin-bottom: 18px; }
+  .scr-run h3 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+  .scr-run p { font-size: 13.5px; opacity: .85; line-height: 1.7; margin-bottom: 34px; }
+  .scr-run button { background: #fff; color: var(--green-deep); border: none; border-radius: 99px; padding: 14px 28px; font-size: 14px; font-weight: 700; cursor: pointer; }
 </style>
 </head>
 <body>
+<div class="app">
 
-<!-- ══════════════════════════════════
-     S0: 랜딩
-══════════════════════════════════ -->
-<div id="s0" class="screen active">
-  <div class="topbar">
-    <div class="topbar-logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L16 14H2L9 2Z" fill="white"/></svg>
-      </div>
-      <div>
-        <div class="logo-text">SUMMIT</div>
-        <div class="logo-sub">일반형 글쓰기 평가</div>
-      </div>
+  <!-- 1. 성장판 로그인 -->
+  <div class="screen scr-login on" id="scr-login">
+    <div class="login-hero">
+      <h2>새로워진<br><span class="g">성장판 등장!</span></h2>
+      <span class="speech">🌱 나랑 같이 공부하자~</span>
+      <img src="data:image/png;base64,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" alt="">
     </div>
-    <button class="btn-login" onclick="go('s1')">로그인</button>
+    <div class="login-body">
+      <div class="login-logo">눈높<span class="dot">이</span> 성장판</div>
+      <div class="tabs"><div class="tab on">학습회원번호</div><div class="tab">아이디</div></div>
+      <input class="login-input" value="0123456789" readonly>
+      <button class="btn-login" onclick="goMyclass(false)">로그인</button>
+    </div>
+    <div class="login-ver">2.01.20</div>
   </div>
 
-  <div class="hero-area">
-    <div class="hero-deco"></div>
-    <div class="hero-deco2"></div>
-    <div class="hero-illustration">📖</div>
+  <!-- 2·5. 마이클래스 (성장판 복귀 겸용) -->
+  <div class="screen scr-myclass" id="scr-myclass">
+    <div class="gnb">
+      <div class="burger"><div></div><div></div><div></div></div>
+      <div class="ico on">🏠</div>
+      <div class="ico">📝</div>
+      <div class="ico">🎖️</div>
+      <div class="ico">🔔</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-top"><h2>마이클래스</h2><span>김대교최대아홉글자… ⏻</span></div>
+      <div class="mc-greet">너에게 맞는 성장 디딤판<small>눈높이가 준비할게</small></div>
+
+      <div class="updating-banner" id="upd-banner">
+        <div class="sp"></div>
+        <div><b>써밋 스코어수학 업데이트 완료</b><small>학습앱을 다시 실행합니다…</small></div>
+      </div>
+
+      <div class="subj-card">
+        <div class="subj-head"><h3>써밋 스코어수학</h3></div>
+        <div class="subj-msg"><span class="face">😜</span>오늘 학습을 시작해 볼까요? 세트를 눌러 시작!</div>
+        <div class="sets">
+          <div class="set-pill" onclick="launchApp()">A 1세트 ✓</div>
+          <div class="set-pill active" onclick="launchApp()">A 2세트 <span class="tag">학습중 →</span></div>
+          <div class="set-pill" onclick="launchApp()">A 3세트 →</div>
+        </div>
+      </div>
+
+      <div class="subj-card dim">
+        <div class="subj-head"><h3>써밋스텝영어</h3></div>
+        <div class="subj-msg"><span class="face">🙂</span>이번 주도 열심히 공부해요.</div>
+        <button class="weekbtn">이번 주 학습하기 →</button>
+      </div>
+
+      <div class="subj-card dim">
+        <div class="subj-head"><h3>내신완공국어</h3></div>
+        <div class="subj-msg"><span class="face">🙂</span>이번 주도 열심히 공부해요.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="content">
-    <div class="hero-body">
-      <div class="hero-title">AI와 함께하는<br/><em>글쓰기</em> 학습</div>
-      <div class="hero-desc">AI 첨삭과 맞춤형 피드백으로<br/>글쓰기 실력을 한 단계 높여요</div>
-    </div>
-
-    <div class="feature-cards">
-      <div class="feat-item">
-        <div class="feat-icon a">📚</div>
-        <div class="feat-label">맞춤형<br/>과제</div>
-        <div class="feat-desc">교과 연계 수행평가</div>
+  <!-- 3. 학습앱 실행 + 4. 미필수 업데이트 팝업 (업데이트 진행 겸용) -->
+  <div class="screen scr-launch" id="scr-launch">
+    <div class="launch-label" id="launch-label">학습앱 실행</div>
+    <div class="launch-app">써밋 스코어수학</div>
+    <div class="spinner"></div>
+    <div class="launch-sub" id="launch-sub"></div>
+    <div class="pop-dim" id="pop">
+      <div class="pop">
+        <h3>업데이트 안내</h3>
+        <div class="msg">새로운 버전이 출시되었습니다.
+원활한 이용을 위해 업데이트해 주세요.</div>
+        <div class="btns">
+          <button class="btn-later" onclick="laterAndRun()">나중에하기</button>
+          <button class="btn-update" onclick="startUpdate()">업데이트하기</button>
+        </div>
       </div>
-      <div class="feat-item">
-        <div class="feat-icon b">🤖</div>
-        <div class="feat-label">AI 자동<br/>평가</div>
-        <div class="feat-desc">정확한 평가와 첨삭</div>
-      </div>
-      <div class="feat-item">
-        <div class="feat-icon c">✏️</div>
-        <div class="feat-label">고쳐<br/>쓰기</div>
-        <div class="feat-desc">피드백 반영 재작성</div>
-      </div>
-      <div class="feat-item">
-        <div class="feat-icon d">📊</div>
-        <div class="feat-label">성장<br/>리포트</div>
-        <div class="feat-desc">실력 변화 분석</div>
-      </div>
-    </div>
-
-    <div class="landing-cta">
-      <button class="btn-primary" onclick="go('s1')">
-        학습 시작하기 <span>›</span>
-      </button>
     </div>
   </div>
+
+  <!-- 6. 학습앱 실행 (학습 시작) -->
+  <div class="screen scr-run" id="scr-run">
+    <div class="face">🌱</div>
+    <h3>써밋 스코어수학</h3>
+    <p id="run-desc"></p>
+    <button onclick="restart()">처음으로</button>
+  </div>
+
 </div>
-
-<!-- ══════════════════════════════════
-     S1: 마카다미아 로그인
-══════════════════════════════════ -->
-<div id="s1" class="screen">
-  <div class="content">
-    <div class="maca-login-wrap">
-
-      <!-- 로고 -->
-      <div class="maca-logo-area">
-        <div class="maca-brand">대교</div>
-        <div class="maca-logo-text">
-          mac<span style="position:relative;">a<span style="position:absolute;top:-6px;right:-2px;width:5px;height:5px;border-radius:50%;background:#F47B30;"></span></span>d<span style="position:relative;">a<span style="position:absolute;top:-6px;right:-1px;width:5px;height:5px;border-radius:50%;background:#F5C842;"></span></span>mi<span style="position:relative;">a<span style="position:absolute;top:-6px;right:-2px;width:5px;height:5px;border-radius:50%;background:#5B9BD5;"></span></span>
-        </div>
-      </div>
-
-      <!-- 폼 -->
-      <div class="maca-form-wrap">
-        <div class="maca-title">마카다미아 로그인</div>
-        <input class="maca-input" type="text" placeholder="아이디" value="dktesibt07"/>
-        <input class="maca-input" type="password" placeholder="비밀번호" value="12345678"/>
-        <div class="maca-save-id">
-          <span class="maca-check-icon">✔</span> 아이디 저장
-        </div>
-        <div class="maca-btn-row">
-          <button class="maca-btn-outline" onclick="alert('회원가입 페이지로 이동합니다.')">회원가입</button>
-          <button class="maca-btn-fill" onclick="go('s2')">로그인</button>
-        </div>
-        <div class="maca-links">
-          <span class="maca-link">아이디 찾기</span>
-          <span class="maca-link">비밀번호 재설정</span>
-        </div>
-        <div class="maca-sns-box" onclick="go('s2')">
-          <span class="maca-sns-label">SNS로 간편하게 시작하기</span>
-          <div class="maca-sns-icons">
-            <span class="sns-n">N</span>
-            <span class="sns-k">💬</span>
-            <span class="sns-g" style="color:#EA4335;">G</span>
-            <span class="sns-a">🍎</span>
-            <span class="sns-arrow">›</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S2: 장르 선택
-══════════════════════════════════ -->
-<div id="s2" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="go('s1')">←</button>
-    <span style="font-size:15px;font-weight:700;">장르 선택</span>
-    <div style="width:28px"></div>
-  </div>
-  <div class="content">
-    <div class="section-header">
-      <div class="badge-step">STEP 1</div>
-      <div class="section-title">어떤 글을 쓸까요?</div>
-      <div class="section-sub">장르를 선택하면 그에 맞는 AI 평가가 진행돼요</div>
-    </div>
-
-    <div class="genre-grid" id="genreGrid">
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">📰</div>
-        <div class="genre-info">
-          <div class="genre-name">설명문</div>
-          <div class="genre-desc">정보를 쉽게 전달</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">💭</div>
-        <div class="genre-info">
-          <div class="genre-name">논설문</div>
-          <div class="genre-desc">주장과 근거 제시</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">📖</div>
-        <div class="genre-info">
-          <div class="genre-name">서사문</div>
-          <div class="genre-desc">경험과 이야기 서술</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">💌</div>
-        <div class="genre-info">
-          <div class="genre-name">편지글</div>
-          <div class="genre-desc">마음을 전하는 글</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">📝</div>
-        <div class="genre-info">
-          <div class="genre-name">독후감</div>
-          <div class="genre-desc">책 읽고 생각 정리</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-      <div class="genre-card" onclick="selectGenre(this)">
-        <div class="genre-emoji">🗞️</div>
-        <div class="genre-info">
-          <div class="genre-name">기사문</div>
-          <div class="genre-desc">사실을 객관적으로</div>
-        </div>
-        <div class="genre-check"></div>
-      </div>
-    </div>
-
-    <button class="btn-primary" id="genreNextBtn" onclick="go('s3')" disabled>
-      선택 완료 ›
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S3: 글쓰기 입력
-══════════════════════════════════ -->
-<div id="s3" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="go('s2')">←</button>
-    <span style="font-size:15px;font-weight:700;">글쓰기 입력</span>
-    <div style="width:28px"></div>
-  </div>
-  <div class="content">
-    <div class="section-header">
-      <div class="badge-step">STEP 2</div>
-      <div class="section-title">글쓰기를 입력해요</div>
-      <div class="section-sub">사진을 찍거나 직접 입력할 수 있어요</div>
-    </div>
-
-    <div class="upload-area" onclick="simulateOCR()">
-      <div class="upload-icon">📷</div>
-      <div class="upload-text">글쓰기 사진 찍기</div>
-      <div class="upload-sub">촬영하면 자동으로 텍스트로 변환돼요</div>
-    </div>
-
-    <div class="divider-or">또는 직접 입력</div>
-
-    <div class="textarea-wrap">
-      <textarea class="write-textarea" id="writeArea" placeholder="여기에 글을 직접 입력하세요..." oninput="updateCharCount()"></textarea>
-      <div class="char-count"><span id="charCount">0</span>자</div>
-    </div>
-
-    <div class="info-box">
-      💡 최소 200자 이상 작성해야 정확한 AI 평가가 가능해요.<br/>
-      제출 후에는 수정 및 재평가가 불가합니다.
-    </div>
-
-    <button class="btn-primary" onclick="startEval()">AI 평가 시작하기 ›</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S4: 평가 중
-══════════════════════════════════ -->
-<div id="s4" class="screen">
-  <div class="loading-wrap">
-    <div class="loading-animation">
-      <div class="loading-inner">✍️</div>
-    </div>
-    <div class="loading-title">AI가 글을 분석하고 있어요</div>
-    <div class="loading-desc">잠시만 기다려 주세요.<br/>정확한 평가를 위해 꼼꼼히 살펴보고 있어요.</div>
-    <div class="loading-steps">
-      <div class="step-item done" id="step1">
-        <div class="step-dot"></div>글쓰기 텍스트 인식 완료
-      </div>
-      <div class="step-item active" id="step2">
-        <div class="step-dot"></div>문장 구조 분석 중...
-      </div>
-      <div class="step-item" id="step3">
-        <div class="step-dot"></div>항목별 평가 채점
-      </div>
-      <div class="step-item" id="step4">
-        <div class="step-dot"></div>총평 및 피드백 생성
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S5: 결과 리포트
-══════════════════════════════════ -->
-<div id="s5" class="screen">
-  <div class="result-header">
-    <div class="result-genre-tag">📰 설명문 · 일반형 평가</div>
-    <div class="result-title">AI 평가 결과</div>
-    <div class="result-sub">2025년 7월 28일 · 1회 평가 완료</div>
-    <div class="score-circle-wrap">
-      <div class="score-circle">
-        <div class="score-num">82</div>
-        <div class="score-label">/ 100점</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="result-content">
-    <div class="section-card">
-      <div class="card-title"><span class="card-title-icon">📊</span>항목별 평가</div>
-      <div class="criteria-list">
-        <div class="criteria-item">
-          <div class="criteria-top">
-            <span class="criteria-name">내용 구성</span>
-            <span class="criteria-score">22 / 25</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
-          <div class="criteria-comment">주제가 명확하고 단락 구성이 체계적이에요.</div>
-        </div>
-        <div class="criteria-item">
-          <div class="criteria-top">
-            <span class="criteria-name">표현 및 어휘</span>
-            <span class="criteria-score">18 / 25</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill mid" style="width:72%"></div></div>
-          <div class="criteria-comment">다양한 어휘 활용이 필요해요. 반복 표현을 줄여보세요.</div>
-        </div>
-        <div class="criteria-item">
-          <div class="criteria-top">
-            <span class="criteria-name">문법 및 맞춤법</span>
-            <span class="criteria-score">21 / 25</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:84%"></div></div>
-          <div class="criteria-comment">전반적으로 정확한 문법 사용이 돋보여요.</div>
-        </div>
-        <div class="criteria-item">
-          <div class="criteria-top">
-            <span class="criteria-name">장르 적합성</span>
-            <span class="criteria-score">21 / 25</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:84%"></div></div>
-          <div class="criteria-comment">설명문 형식에 잘 맞게 작성되었어요.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-card">
-      <div class="card-title"><span class="card-title-icon">💬</span>AI 총평</div>
-      <div class="total-comment">
-        전체적으로 잘 구성된 설명문입니다. 주제를 명확히 설정하고 순서에 맞게 내용을 전개한 점이 좋았어요.
-        어휘 다양성을 높이고 반복되는 표현을 다양하게 변환한다면 더욱 완성도 높은 글이 될 거예요. 👍
-      </div>
-    </div>
-
-    <div class="result-cta">
-      <button class="btn-primary" onclick="saveAndGoMypage()">📋 내 결과 이력 보기</button>
-      <button class="btn-secondary" onclick="alert('고쳐쓰기 기능은 준비 중입니다.')">✏️ 고쳐쓰기</button>
-      <button class="btn-secondary" onclick="go('s2')" style="border-color:var(--border);color:var(--gray-sub);">새 글쓰기 시작하기</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S6: 마이페이지 — 결과 이력
-══════════════════════════════════ -->
-<div id="s6" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="go('s5')">←</button>
-    <span style="font-size:15px;font-weight:700;">내 결과 이력</span>
-    <div style="width:28px"></div>
-  </div>
-  <div class="content">
-
-    <!-- 프로필 요약 -->
-    <div class="mypage-profile">
-      <div class="profile-avatar">🧑‍🎓</div>
-      <div class="profile-info">
-        <div class="profile-name">김성준 학생</div>
-        <div class="profile-meta">마카다미아 회원 · 중학교 2학년</div>
-      </div>
-      <div class="profile-badge">
-        <div class="badge-count" id="historyCount">0</div>
-        <div class="badge-label">회 평가</div>
-      </div>
-    </div>
-
-    <!-- 성장 요약 -->
-    <div class="growth-card">
-      <div class="growth-title">📈 나의 글쓰기 성장</div>
-      <div class="growth-stats">
-        <div class="growth-stat">
-          <div class="growth-num" id="avgScore">—</div>
-          <div class="growth-label">평균 점수</div>
-        </div>
-        <div class="growth-divider"></div>
-        <div class="growth-stat">
-          <div class="growth-num" id="bestScore">—</div>
-          <div class="growth-label">최고 점수</div>
-        </div>
-        <div class="growth-divider"></div>
-        <div class="growth-stat">
-          <div class="growth-num" id="totalCount">0</div>
-          <div class="growth-label">총 평가 수</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 이력 목록 -->
-    <div class="history-header">
-      <span class="history-title">평가 이력</span>
-      <span class="history-sort">최신순 ▾</span>
-    </div>
-    <div id="historyList" class="history-list">
-      <div class="history-empty">
-        <div style="font-size:40px;margin-bottom:12px;">📝</div>
-        <div style="font-size:14px;font-weight:600;color:#333;">아직 평가 이력이 없어요</div>
-        <div style="font-size:12px;color:var(--gray-sub);margin-top:4px;">글쓰기 평가를 완료하면 이곳에 쌓여요</div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px;">
-      <button class="btn-primary" onclick="go('s2')">새 글쓰기 평가하기 ›</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     S7: 이력 상세
-══════════════════════════════════ -->
-<div id="s7" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="go('s6')">←</button>
-    <span style="font-size:15px;font-weight:700;">평가 상세</span>
-    <div style="width:28px"></div>
-  </div>
-  <div id="detailContent"></div>
-</div>
-
-<style>
-  /* ── 마이페이지 ── */
-  .mypage-profile {
-    display: flex; align-items: center; gap: 14px;
-    background: var(--white); border-radius: var(--radius); padding: 18px;
-    margin-top: 20px; margin-bottom: 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.05);
-  }
-  .profile-avatar { font-size: 36px; }
-  .profile-info { flex: 1; }
-  .profile-name { font-size: 16px; font-weight: 800; color: #1a1a1a; }
-  .profile-meta { font-size: 11px; color: var(--gray-sub); margin-top: 2px; }
-  .profile-badge { text-align: center; background: var(--green-bg); border-radius: 10px; padding: 8px 14px; }
-  .badge-count { font-size: 22px; font-weight: 900; color: var(--green-dark); }
-  .badge-label { font-size: 10px; color: var(--gray-sub); }
-
-  .growth-card {
-    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-main) 100%);
-    border-radius: var(--radius); padding: 18px; margin-bottom: 20px; color: #fff;
-  }
-  .growth-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; opacity: .9; }
-  .growth-stats { display: flex; align-items: center; justify-content: space-around; }
-  .growth-stat { text-align: center; }
-  .growth-num { font-size: 24px; font-weight: 900; }
-  .growth-label { font-size: 11px; opacity: .8; margin-top: 2px; }
-  .growth-divider { width: 1px; height: 36px; background: rgba(255,255,255,.3); }
-
-  .history-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 10px;
-  }
-  .history-title { font-size: 15px; font-weight: 700; color: #1a1a1a; }
-  .history-sort { font-size: 12px; color: var(--gray-sub); cursor: pointer; }
-
-  .history-list { display: flex; flex-direction: column; gap: 10px; }
-  .history-empty { text-align: center; padding: 48px 0; }
-
-  .history-item {
-    background: var(--white); border-radius: var(--radius); padding: 16px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.05); cursor: pointer;
-    display: flex; align-items: center; gap: 14px;
-    transition: box-shadow .2s;
-    border-left: 4px solid var(--green-main);
-  }
-  .history-item:hover { box-shadow: 0 4px 16px rgba(76,175,80,.15); }
-  .history-item.score-mid { border-left-color: var(--yellow); }
-  .history-item.score-low { border-left-color: var(--orange); }
-
-  .hi-score-wrap { text-align: center; min-width: 48px; }
-  .hi-score { font-size: 22px; font-weight: 900; color: var(--green-dark); }
-  .hi-score.mid { color: #C68000; }
-  .hi-score.low { color: var(--orange); }
-  .hi-score-label { font-size: 10px; color: var(--gray-sub); }
-
-  .hi-info { flex: 1; }
-  .hi-genre { font-size: 13px; font-weight: 700; color: #1a1a1a; }
-  .hi-date { font-size: 11px; color: var(--gray-sub); margin-top: 3px; }
-  .hi-bars { display: flex; gap: 3px; margin-top: 6px; }
-  .hi-bar { height: 4px; border-radius: 2px; background: var(--border); flex: 1; overflow: hidden; }
-  .hi-bar-fill { height: 100%; border-radius: 2px; background: var(--green-main); }
-
-  .hi-arrow { font-size: 16px; color: var(--border); }
-
-  /* 상세 */
-  .detail-wrap { padding-bottom: 40px; }
-</style>
 
 <script>
-  // ── 이력 저장소 (세션 메모리) ──
-  const history = [
-    {
-      id: 1, genre: '논설문', emoji: '💭', date: '2025.06.10', score: 74,
-      criteria: [
-        { name: '내용 구성', score: 18, max: 25, pct: 72, comment: '주장은 명확하나 근거가 부족해요.' },
-        { name: '표현 및 어휘', score: 19, max: 25, pct: 76, comment: '어휘 선택이 무난해요.' },
-        { name: '문법 및 맞춤법', score: 20, max: 25, pct: 80, comment: '맞춤법 오류가 적어요.' },
-        { name: '장르 적합성', score: 17, max: 25, pct: 68, comment: '논설문 형식을 좀 더 살려보세요.' }
-      ],
-      comment: '주장과 근거의 연결을 더 강화하면 설득력 있는 논설문이 될 거예요. 반박 논거를 추가해보세요.'
-    },
-    {
-      id: 2, genre: '독후감', emoji: '📝', date: '2025.06.25', score: 79,
-      criteria: [
-        { name: '내용 구성', score: 20, max: 25, pct: 80, comment: '책의 내용을 잘 요약했어요.' },
-        { name: '표현 및 어휘', score: 20, max: 25, pct: 80, comment: '감정 표현이 풍부해요.' },
-        { name: '문법 및 맞춤법', score: 21, max: 25, pct: 84, comment: '문장 구조가 안정적이에요.' },
-        { name: '장르 적합성', score: 18, max: 25, pct: 72, comment: '자신의 생각을 더 담아보세요.' }
-      ],
-      comment: '책 내용 정리가 잘 되어 있어요. 자신의 느낌과 교훈을 더 구체적으로 작성하면 완성도가 높아질 거예요.'
-    }
-  ];
+  const $ = id => document.getElementById(id);
 
-  let currentResult = null;
-
-  function go(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+    $(id).classList.add('on');
   }
 
-  function selectGenre(el) {
-    document.querySelectorAll('.genre-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('genreNextBtn').disabled = false;
+  // 1 → 2 (returning=true면 5. 성장판 복귀)
+  function goMyclass(returning) {
+    show('scr-myclass');
+    $('upd-banner').classList.toggle('on', !!returning);
   }
 
-  function updateCharCount() {
-    const v = document.getElementById('writeArea').value.length;
-    document.getElementById('charCount').textContent = v;
+  // 2 → 3 → 4 (미필수 팝업)
+  function launchApp() {
+    $('upd-banner').classList.remove('on');
+    show('scr-launch');
+    $('launch-label').textContent = '학습앱 실행';
+    $('launch-sub').textContent = '';
+    $('pop').classList.remove('on');
+    setTimeout(() => $('pop').classList.add('on'), 1000);
   }
 
-  function simulateOCR() {
-    const sample = `환경 오염은 현대 사회가 직면한 가장 심각한 문제 중 하나입니다. 산업화와 도시화가 빠르게 진행되면서 대기, 수질, 토양 오염이 심화되고 있습니다. 특히 플라스틱 폐기물은 바다와 토양에 오랫동안 남아 생태계를 위협합니다. 이를 해결하기 위해 개인, 기업, 정부가 함께 협력하여 친환경 정책을 실천해야 합니다.`;
-    document.getElementById('writeArea').value = sample;
-    updateCharCount();
+  // [나중에하기] → 현재 버전으로 학습 시작
+  function laterAndRun() {
+    $('pop').classList.remove('on');
+    runApp('현재 버전(2.01.20)으로 학습을 시작합니다');
   }
 
-  function startEval() {
-    // 로딩 단계 초기화
-    ['step1','step2','step3','step4'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('done','active');
-    });
-    document.getElementById('step1').classList.add('done');
-    document.getElementById('step2').classList.add('active');
-    go('s4');
-
-    let steps = ['step2','step3','step4'];
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < steps.length) {
-        document.getElementById(steps[i]).classList.remove('active');
-        document.getElementById(steps[i]).classList.add('done');
-        if (i+1 < steps.length) document.getElementById(steps[i+1]).classList.add('active');
-        i++;
-      } else {
-        clearInterval(timer);
-        // 이번 평가 결과 생성
-        currentResult = {
-          id: history.length + 1,
-          genre: '설명문', emoji: '📰',
-          date: new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\. /g,'.').replace('.','').slice(0,-1),
-          score: 82,
-          criteria: [
-            { name: '내용 구성',    score: 22, max: 25, pct: 88, comment: '주제가 명확하고 단락 구성이 체계적이에요.' },
-            { name: '표현 및 어휘', score: 18, max: 25, pct: 72, comment: '다양한 어휘 활용이 필요해요. 반복 표현을 줄여보세요.' },
-            { name: '문법 및 맞춤법', score: 21, max: 25, pct: 84, comment: '전반적으로 정확한 문법 사용이 돋보여요.' },
-            { name: '장르 적합성', score: 21, max: 25, pct: 84, comment: '설명문 형식에 잘 맞게 작성되었어요.' }
-          ],
-          comment: '전체적으로 잘 구성된 설명문입니다. 어휘 다양성을 높이고 반복되는 표현을 변환한다면 더욱 완성도 높은 글이 될 거예요. 👍'
-        };
-        setTimeout(() => go('s5'), 600);
+  // [업데이트하기] → 학습앱에서 업데이트 진행 → 완료 → 5. 성장판 복귀 → 6. 학습앱 재실행
+  function startUpdate() {
+    $('pop').classList.remove('on');
+    $('launch-label').textContent = '업데이트 진행 중';
+    let p = 0;
+    const t = setInterval(() => {
+      p = Math.min(100, p + Math.floor(Math.random() * 14) + 7);
+      $('launch-sub').textContent = p + '%';
+      if (p >= 100) {
+        clearInterval(t);
+        setTimeout(() => {
+          // 성장판 복귀
+          goMyclass(true);
+          // 잠시 후 학습앱 재실행
+          setTimeout(() => {
+            $('upd-banner').classList.remove('on');
+            show('scr-launch');
+            $('launch-label').textContent = '학습앱 실행';
+            $('launch-sub').textContent = '';
+            $('pop').classList.remove('on');
+            setTimeout(() => runApp('업데이트 완료 — 최신 버전(2.01.21)으로 학습을 시작합니다'), 1100);
+          }, 2200);
+        }, 500);
       }
-    }, 900);
+    }, 300);
   }
 
-  function saveAndGoMypage() {
-    if (currentResult) {
-      history.unshift(currentResult);
-      currentResult = null;
-    }
-    renderMypage();
-    go('s6');
+  function runApp(desc) {
+    show('scr-run');
+    $('run-desc').textContent = desc;
   }
 
-  function renderMypage() {
-    const list = document.getElementById('historyList');
-    const total = history.length;
-    document.getElementById('historyCount').textContent = total;
-    document.getElementById('totalCount').textContent = total;
-
-    if (total === 0) {
-      list.innerHTML = `<div class="history-empty"><div style="font-size:40px;margin-bottom:12px;">📝</div><div style="font-size:14px;font-weight:600;color:#333;">아직 평가 이력이 없어요</div><div style="font-size:12px;color:var(--gray-sub);margin-top:4px;">글쓰기 평가를 완료하면 이곳에 쌓여요</div></div>`;
-      document.getElementById('avgScore').textContent = '—';
-      document.getElementById('bestScore').textContent = '—';
-      return;
-    }
-
-    const avg = Math.round(history.reduce((s,h) => s+h.score, 0) / total);
-    const best = Math.max(...history.map(h => h.score));
-    document.getElementById('avgScore').textContent = avg + '점';
-    document.getElementById('bestScore').textContent = best + '점';
-
-    list.innerHTML = history.map((h, idx) => {
-      const scoreClass = h.score >= 80 ? '' : h.score >= 65 ? 'score-mid' : 'score-low';
-      const numClass   = h.score >= 80 ? '' : h.score >= 65 ? 'mid' : 'low';
-      const bars = h.criteria.map(c =>
-        `<div class="hi-bar"><div class="hi-bar-fill" style="width:${c.pct}%;background:${c.pct>=80?'var(--green-main)':c.pct>=65?'var(--yellow)':'var(--orange)'}"></div></div>`
-      ).join('');
-      const isNew = idx === 0 && history[0].id === (history.length);
-      return `
-        <div class="history-item ${scoreClass}" onclick="showDetail(${h.id})">
-          <div class="hi-score-wrap">
-            <div class="hi-score ${numClass}">${h.score}</div>
-            <div class="hi-score-label">/ 100</div>
-          </div>
-          <div class="hi-info">
-            <div class="hi-genre">${h.emoji} ${h.genre} ${isNew ? '<span style="background:var(--green-main);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px;">NEW</span>' : ''}</div>
-            <div class="hi-date">${h.date}</div>
-            <div class="hi-bars">${bars}</div>
-          </div>
-          <div class="hi-arrow">›</div>
-        </div>`;
-    }).join('');
-  }
-
-  function showDetail(id) {
-    const h = history.find(x => x.id === id);
-    if (!h) return;
-    const scoreColor = h.score >= 80 ? 'var(--green-dark)' : h.score >= 65 ? '#C68000' : 'var(--orange)';
-    const criteriaHTML = h.criteria.map(c => `
-      <div class="criteria-item">
-        <div class="criteria-top">
-          <span class="criteria-name">${c.name}</span>
-          <span class="criteria-score">${c.score} / ${c.max}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill ${c.pct<80?c.pct<65?'low':'mid':''}" style="width:${c.pct}%"></div></div>
-        <div class="criteria-comment">${c.comment}</div>
-      </div>`).join('');
-
-    document.getElementById('detailContent').innerHTML = `
-      <div class="result-header">
-        <div class="result-genre-tag">${h.emoji} ${h.genre} · 일반형 평가</div>
-        <div class="result-title">AI 평가 결과</div>
-        <div class="result-sub">${h.date}</div>
-        <div class="score-circle-wrap">
-          <div class="score-circle">
-            <div class="score-num" style="color:${scoreColor}">${h.score}</div>
-            <div class="score-label">/ 100점</div>
-          </div>
-        </div>
-      </div>
-      <div class="result-content detail-wrap">
-        <div class="section-card">
-          <div class="card-title"><span class="card-title-icon">📊</span>항목별 평가</div>
-          <div class="criteria-list">${criteriaHTML}</div>
-        </div>
-        <div class="section-card">
-          <div class="card-title"><span class="card-title-icon">💬</span>AI 총평</div>
-          <div class="total-comment">${h.comment}</div>
-        </div>
-      </div>`;
-    go('s7');
+  function restart() {
+    show('scr-login');
+    $('upd-banner').classList.remove('on');
   }
 </script>
 </body>
