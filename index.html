@@ -117,6 +117,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gw-title{font-size:11px;font-weight:600;color:#2E7D32;margin-bottom:5px}
 .gw-text{font-size:13px;color:#1B5E20;line-height:1.7}
 
+.spell-old{color:#D64545;text-decoration:line-through;font-weight:600}
+.spell-new{color:#1AAF86;font-weight:700}
+
+/* ===== [신규] 무료(일반형 글쓰기) → 유료(수행평가) 통합 업그레이드 배너 ===== */
+.upgrade-divider{display:flex;align-items:center;gap:10px;margin:22px 0 14px;color:#ccc;font-size:11px}
+.upgrade-divider::before,.upgrade-divider::after{content:'';flex:1;height:1px;background:#EEE}
+.upgrade-banner{background:linear-gradient(135deg,#4B3FA6,#6C5FD8);border-radius:14px;padding:20px 18px;color:#fff}
+.upgrade-banner .ub-title{font-size:14.5px;font-weight:800;margin-bottom:5px;line-height:1.5}
+.upgrade-banner .ub-sub{font-size:11.5px;color:rgba(255,255,255,.88);line-height:1.6;margin-bottom:14px}
+.upgrade-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.upgrade-list .ul-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:9px;padding:9px 12px;font-size:12px;font-weight:600}
+.upgrade-list .ul-item .ul-ic{font-size:14px}
+.upgrade-banner .ub-btn{display:block;width:100%;text-align:center;background:#fff;color:#4B3FA6;font-size:13px;font-weight:700;padding:11px;border-radius:10px;border:none;cursor:pointer}
+
+/* ===== [신규] 월별 제출 횟수 제한 & 진단 이력 페이지 ===== */
+.usage-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#F6F5FC,#EFEBFB);border:1.5px solid #DDD5F7;border-radius:12px;padding:13px 14px;margin-bottom:16px;font-size:12px;color:#555}
+.usage-bar .ub-left{display:flex;align-items:center;gap:8px}
+.usage-bar .ub-ic{font-size:18px}
+.usage-bar b{color:#4B3FA6;font-size:13px}
+.usage-history-btn{display:flex;align-items:center;gap:4px;background:#4B3FA6;color:#fff;font-weight:700;font-size:11.5px;padding:8px 13px;border-radius:20px;cursor:pointer;white-space:nowrap;border:none}
+.usage-history-btn:hover{background:#3C3489}
+.history-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.history-back{font-size:16px;color:#666;cursor:pointer}
+.history-quota{font-size:12px;color:#777;background:#F6F5FC;border-radius:8px;padding:10px 14px;margin-bottom:16px}
+.history-quota b{color:#4B3FA6}
+.history-item{border:1px solid #EEE;border-radius:10px;padding:13px 14px;margin-bottom:9px;cursor:pointer;transition:border-color .15s}
+.history-item:hover{border-color:#C9C2F2}
+.history-item .hi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.history-item .hi-title{font-size:12.5px;font-weight:700;color:#111}
+.history-item .hi-score{font-size:13px;font-weight:800;color:#4B3FA6}
+.history-item .hi-meta{font-size:10.5px;color:#999}
+
 .screen{display:none}.screen.active{display:block}
 
 /* ===== [신규] 솔루니 사이트 메인 UI 목업 (상단배너 진입경로 데모) ===== */
@@ -264,11 +296,17 @@ const examples = [
     id:0, grade:'4학년', gradeGroup:'초3~4', genre:'일기·생활문', gid:'G_REFLECTION_EXPERIENCE',
     title:'봉사활동 후기 (일기·생활문)',
     tag:'초등·성찰형',
-    text:`오늘은 처음으로 요양원 봉사활동을 다녀왔다. 할머니 할아버지들이 계신 방에 들어갔을 때 긴장이 됐다. 어떻게 말을 걸어야 할지 몰라서 그냥 서 있었는데, 한 할머니께서 먼저 손을 잡아 주셨다.
+    text:`오늘은 처음으로 요양원 봉사활동을 다녀왔다. 할머니 할아버지들이 계신 방에 들어갔을 때 긴장이 됬다. 어떻게 말을 걸어야 할지 몰라서 그냥 서 있었는데, 한 할머니께서 먼저 손을 잡아 주셨다.
 
-"어서 와, 예쁜 아이야."
+"어서 와, 예쁜 아이야"
 
-할머니의 손은 따뜻하고 거칠었다. 나는 할머니 옆에 앉아서 노래를 함께 불렀다. 할머니께서 눈물을 조금 흘리셔서 나도 마음이 짠했다. 봉사활동이 끝나고 집에 오는 길에 생각이 많아졌다. 나는 평소에 불편한 게 있으면 짜증을 냈는데, 할머니들은 혼자서도 얼마나 힘드실까 싶었다. 다음에도 또 오고 싶다고 생각했다.`,
+할머니의 손은 따뜻하고 거칠었다. 나는 할머니 옆에 앉아서 노래를 함께 불렀다. 할머니께서 눈물을 조금 흘리셔서 나도 마음이 짠했다. 봉사활동이 끝나고 집에 오는 길에 생각이 많아졌다. 나는 평소에 불편한 게 있으면 웬지 짜증을 냈는데, 할머니들은 혼자서도 얼마나 힘드실까 싶었다. 다음에도 또 오고싶다고 생각했다.`,
+    spellingErrors:[
+      {original:'됬다', suggestion:'됐다', type:'맞춤법'},
+      {original:'웬지', suggestion:'왠지', type:'맞춤법'},
+      {original:'오고싶다고', suggestion:'오고 싶다고', type:'띄어쓰기'},
+      {original:'예쁜 아이야"', suggestion:'예쁜 아이야."', type:'문장부호'}
+    ],
     scores:{적합성:{score:20,max:25,pct:80,text:'봉사활동이라는 주제와 일기 형식이 잘 맞으며 경험의 흐름이 자연스럽게 드러난다.'},
             내용:{score:26,max:35,pct:74,text:'할머니 손의 촉감, 눈물 장면 등 구체적인 경험이 잘 드러나나 성장·변화 표현이 좀 더 구체적으로 이어지면 좋겠다.'},
             조직:{score:13,max:15,pct:87,text:'도입·전개·마무리 흐름이 안정적이며 감정 변화가 자연스럽게 이어진다.'},
@@ -282,7 +320,12 @@ const examples = [
     id:1, grade:'5학년', gradeGroup:'초5~6', genre:'설명문', gid:'G_EXPLAIN_BASIC',
     title:'물의 세 가지 상태 (설명문)',
     tag:'초등·설명형',
-    text:`물은 온도에 따라 세 가지 상태로 변한다. 첫째, 고체 상태인 얼음이다. 물의 온도가 0도 이하로 내려가면 물이 얼어서 얼음이 된다. 얼음은 딱딱하고 손으로 만질 수 있다. 둘째, 액체 상태인 물이다. 우리가 마시는 물이 바로 이것이다. 0도에서 100도 사이에서는 물이 흘러내리는 액체 상태로 존재한다. 셋째, 기체 상태인 수증기이다. 물이 100도 이상이 되면 수증기로 변한다. 수증기는 눈에 보이지 않지만 공기 중에 섞여 있다. 이처럼 물은 온도에 따라 얼음, 물, 수증기로 상태가 바뀐다. 이것을 물의 상태 변화라고 한다.`,
+    text:`물은 온도에 따라 세 가지 상태로 변한다. 첫째, 고체 상태인 얼음이다. 물의 온도가 0도 이하로 내려가면 물이 얼어서 얼음이 된다. 얼음은 딱딱하고 손으로 만질수 있다. 둘째 액체 상태인 물이다. 우리가 마시는 물이 바로 이것이다. 0도에서 100도 사이에서는 물이 흘러내리는 액체 상태로 존재한다. 셋째, 기체 상태인 수증기이다. 물이 100도 이상이 돼면 수증기로 변한다. 수증기는 눈에 보이지 않지만 공기 중에 섞여 있다. 이처럼 물은 온도에 따라 얼음, 물, 수증기로 상태가 바뀐다. 이것을 물의 상태 변화라고 한다.`,
+    spellingErrors:[
+      {original:'돼면', suggestion:'되면', type:'맞춤법'},
+      {original:'만질수', suggestion:'만질 수', type:'띄어쓰기'},
+      {original:'둘째 액체', suggestion:'둘째, 액체', type:'문장부호'}
+    ],
     scores:{적합성:{score:20,max:20,pct:100,text:'설명문의 목적과 형식이 명확하게 유지되고 주제에 맞게 잘 구성되었다.'},
             내용:{score:30,max:35,pct:86,text:'세 가지 상태의 특성을 예시와 함께 명확하게 설명했다. 상태 변화가 일어나는 구체적인 예시를 하나 더 추가하면 더 풍부해진다.'},
             조직:{score:23,max:25,pct:92,text:'첫째·둘째·셋째 구조가 체계적이며 마무리 문장이 전체를 잘 정리했다.'},
@@ -296,11 +339,16 @@ const examples = [
     id:2, grade:'6학년', gradeGroup:'초5~6', genre:'독서감상문·서평', gid:'G_READING_OPINION',
     title:'어린왕자 독서감상문',
     tag:'초등·독서형',
-    text:`나는 얼마 전에 『어린왕자』를 읽었다. 처음에는 짧고 쉬운 이야기인 줄 알았는데, 읽으면 읽을수록 깊은 내용이 담겨 있었다.
+    text:`나는 얼마 전에 『어린왕자』를 읽었다. 처음에는 짧고 쉬운 이야기인줄 알았는데, 읽으면 읽을수록 깊은 내용이 담겨 있었다.
 
-책에서 가장 기억에 남는 장면은 여우가 어린왕자에게 '길들인다'는 것의 의미를 알려 주는 부분이다. 여우는 "네가 나를 길들이면 우리는 서로에게 유일한 존재가 된다"고 말했다. 이 말이 마음에 오래 남았다.
+책에서 가장 기억에 남는 장면은 여우가 어린왕자에게 '길들인다'는 것의 의미를 알려 주는 부분이다. 여우는 "네가 나를 길들이면 우리는 서로에게 유일한 존재가 된다고 말했다. 이 말이 마음에 오래 남았다.
 
-나는 이 책을 읽으면서 진짜 중요한 것은 눈에 보이지 않는다는 말이 생각났다. 나도 눈에 보이는 것만 중요하게 생각했던 것 같아서 반성이 됐다. 앞으로는 주변 사람들의 마음을 더 신경 쓰고 싶다.`,
+나는 이 책을 읽으면서 진짜 중요한 것은 눈에 보이지 않는다는 말이 생각났다. 나도 눈에 보이는 것만 중요하게 생각했던 것 같아서 반성이 됫다. 앞으로는 주변 사람들의 마음을 더 신경 쓰고 싶다.`,
+    spellingErrors:[
+      {original:'됫다', suggestion:'됐다', type:'맞춤법'},
+      {original:'이야기인줄', suggestion:'이야기인 줄', type:'띄어쓰기'},
+      {original:'된다고 말했다', suggestion:'된다"고 말했다', type:'문장부호'}
+    ],
     scores:{적합성:{score:18,max:20,pct:90,text:'독서감상문 형식에 맞게 책의 내용과 자신의 생각이 함께 드러난다.'},
             내용:{score:28,max:35,pct:80,text:'인상 깊은 장면과 이유가 구체적으로 제시되었다. 자신의 생각과 책 내용을 더 긴밀하게 연결하면 좋겠다.'},
             조직:{score:20,max:25,pct:80,text:'도입·전개·마무리가 자연스럽게 이어진다. 문단 간 연결이 더 매끄러우면 좋겠다.'},
@@ -324,10 +372,13 @@ const examples = [
 땅도 기지개를 켠다
 봄비야, 너는 봄의 편지구나
 
-빗소리가 그치고 나면
+빗소리가 그치고나면
 햇살이 웃으며 나온다
 봄이 왔다고
 온 세상이 함께 웃는다`,
+    spellingErrors:[
+      {original:'그치고나면', suggestion:'그치고 나면', type:'띄어쓰기'}
+    ],
     scores:{적합성:{score:18,max:20,pct:90,text:'시의 형식과 봄비라는 주제가 잘 맞으며 3연 구성이 안정적이다.'},
             내용:{score:27,max:35,pct:77,text:'봄비를 편지로 표현하는 비유가 신선하다. 각 연의 이미지를 더 구체적으로 발전시키면 더 풍부해진다.'},
             조직:{score:22,max:25,pct:88,text:'3연 구성이 자연스럽게 흐르며 봄비 → 자연의 반응 → 봄의 도래로 이어지는 전개가 좋다.'},
@@ -339,8 +390,16 @@ const examples = [
   }
 ];
 
-// screen: 'home'(신규 진입경로 - 사이트 메인 UI 목업) → 0(글 입력) → 1(분석 중) → 2(결과 확인)
-let state = {screen:'home', grade:'', genre:'', text:'', example:null, bannerIndex:1};
+// screen: 'home'(사이트 메인 UI 목업) → 0(글 입력) → 1(분석 중) → 2(결과 확인) → 'history'(진단 이력, [신규])
+// [신규] 일반형 글쓰기는 월 5회 제출 제한이 있어, 잔여 횟수 표시 및 이력 조회 화면이 필요합니다.
+const MONTHLY_LIMIT = 5;
+let state = {screen:'home', grade:'', genre:'', text:'', example:null, bannerIndex:1, usedCount:2};
+
+// [신규] 진단 이력 mock 데이터 — 실제 구현 시 사용자별 제출 이력 API로 대체
+const historyMock = [
+  {date:'2026-06-28', title:'봉사활동 후기 (일기·생활문)', genre:'일기·생활문', grade:'4학년', total:78, exId:0},
+  {date:'2026-06-21', title:'물의 세 가지 상태 (설명문)', genre:'설명문', grade:'5학년', total:91, exId:1}
+];
 
 // 히어로 배너 캐러셀 슬라이드 — index0: 기존 '성장로그' 배너 / index1: [신규] '글쓰기 체험' 배너
 const heroSlides = [
@@ -354,6 +413,7 @@ function render(){
   else if(state.screen===0) app.innerHTML = renderInput();
   else if(state.screen===1) app.innerHTML = renderAnalyzing();
   else if(state.screen===2) app.innerHTML = renderResult();
+  else if(state.screen==='history') app.innerHTML = renderHistory();
   bindEvents();
 }
 
@@ -586,7 +646,17 @@ function renderInput(){
     '고등': ['고1','고2','고3']
   };
   const curSchool = state.grade ? (parseInt(state.grade)||0) <= 6 && state.grade.includes('학년') ? '초등' : state.grade.startsWith('중') ? '중등' : '고등' : '';
+  const remain = MONTHLY_LIMIT - state.usedCount;
+  const isMaxed = remain<=0;
   return `
+    <!-- [신규] 일반형 글쓰기는 월 5회 제출 제한 — 잔여 횟수 표시 + 이력 보기 버튼(상단 강조) -->
+    <div class="usage-bar">
+      <div class="ub-left">
+        <span class="ub-ic">📋</span>
+        <span>이번 달 진단 <b>${state.usedCount}/${MONTHLY_LIMIT}회</b> 사용${isMaxed?' · 모두 사용했어요':''}</span>
+      </div>
+      <button class="usage-history-btn" id="historyLink">내 진단 기록 ›</button>
+    </div>
     <div class="step-bar">
       <span class="step active">글 입력</span><span class="sep">›</span>
       <span class="step">분석 중</span><span class="sep">›</span>
@@ -627,12 +697,12 @@ function renderInput(){
       </div>`).join('')}
     </div>
     <div class="sec-title">또는 직접 글을 붙여 넣어 주세요</div>
-    <textarea class="textarea" id="textArea" placeholder="쓴 글을 여기에 붙여 넣어 주세요.">${state.text}</textarea>
+    <textarea class="textarea" id="textArea" placeholder="쓴 글을 여기에 붙여 넣어 주세요." ${isMaxed?'disabled':''}>${state.text}</textarea>
     <div class="char-row">
       <span id="charCount">${state.text.length}자</span>
       <span>권장 200자 이상</span>
     </div>
-    <button class="btn-primary" id="submitBtn" ${(!state.grade||!state.text)?'disabled':''}>글쓰기 진단 받기</button>
+    <button class="btn-primary" id="submitBtn" ${(!state.grade||!state.text||isMaxed)?'disabled':''}>${isMaxed?'이번 달 진단 횟수를 모두 사용했어요':'글쓰기 진단 받기'}</button>
   `;
 }
 
@@ -657,6 +727,23 @@ function renderAnalyzing(){
   `;
 }
 
+// [신규] 진단 이력 페이지 — 월 5회 제출 제한이 있어 과거 제출 목록을 확인할 수 있어야 함
+function renderHistory(){
+  const remain = MONTHLY_LIMIT - state.usedCount;
+  return `
+    <div class="history-head">
+      <span class="history-back" id="historyBack">←</span>
+      <div class="sec-title" style="margin-bottom:0">내 진단 기록</div>
+    </div>
+    <div class="history-quota">이번 달 <b>${state.usedCount}/${MONTHLY_LIMIT}회</b> 제출했어요 (남은 횟수 ${remain>0?remain:0}회). 매달 1일에 초기화됩니다.</div>
+    ${historyMock.length ? historyMock.map(h=>`<div class="history-item" data-ex="${h.exId}">
+      <div class="hi-top"><span class="hi-title">${h.title}</span><span class="hi-score">${h.total}점</span></div>
+      <div class="hi-meta">${h.date} · ${h.grade} · ${h.genre}</div>
+    </div>`).join('') : `<div style="padding:30px;text-align:center;color:#999;font-size:12px">아직 제출한 글이 없어요.</div>`}
+    <button class="btn-secondary" id="historyToInput">+ 새 글 진단하기</button>
+  `;
+}
+
 function renderResult(){
   const e = state.example;
   if(!e) return `<div style="padding:40px;text-align:center;color:#888">예시 글을 선택해 주세요.</div>`;
@@ -672,12 +759,22 @@ function renderResult(){
     {key:'표현',label:'표현과 규범',dc:'d4'}
   ];
   return `
-    <!-- 실제 구현 시: 점수·피드백은 Writing Engine V4 2차 데이터 및 평가 엔진 결과로 동적 생성됨 -->
+    <!-- 실제 구현 시: 점수·피드백은 Writing Engine V4 2차 데이터 및 평가 엔진 결과로 동적 생성됨
+         [일반형 글쓰기 리포트 구성] 원문 → 총점 → 세부 점수 → 문단별 피드백 → 총평
+         맞춤법 진단 / 정밀 문장 분석(KReaD) / 성장 가이드는 하단 배너를 통해 '수행평가' 상담으로 유도 -->
     <div class="step-bar">
       <span class="step done">글 입력</span><span class="sep">›</span>
       <span class="step done">분석 중</span><span class="sep">›</span>
       <span class="step active">결과 확인</span>
     </div>
+
+    <!-- 1. 사용자가 쓴 글 (학생글 원문) -->
+    <div class="student-box">
+      <div class="sb-title"><span>제출한 글</span><span style="color:#999;font-weight:400">${e.grade} · ${e.genre}</span></div>
+      <div class="sb-text">${e.text}</div>
+    </div>
+
+    <!-- 2. 총점 -->
     <div class="res-header">
       <div class="res-title">${e.title}</div>
       <div class="score-row">
@@ -698,6 +795,7 @@ function renderResult(){
       <b>글 종류 분석</b><br>${unknownMsg}
     </div>` : ''}
 
+    <!-- 3. 세부 점수 (영역별 진단) -->
     <div class="sec-title">영역별 진단</div>
     ${areas.map(a=>{
       const s=e.scores[a.key];
@@ -711,23 +809,33 @@ function renderResult(){
       </div>`;
     }).join('')}
 
-    <div class="overall">
-      <div class="o-title">전체 총평</div>
-      <div class="o-text">${e.overall}</div>
-    </div>
-
-    <div class="student-box">
-      <div class="sb-title"><span>제출한 글</span></div>
-      <div class="sb-text">${e.text}</div>
-    </div>
-
+    <!-- 4. 문단별 피드백 (전체 공개) -->
     <div class="sec-title">문단별 피드백</div>
     ${e.paras.map((p,i)=>`<div class="para-box">
       <div class="pb-title">${i+1}문단</div>
       <div class="pb-text">${p}</div>
     </div>`).join('')}
 
-    <button class="btn-secondary" id="retryBtn">← 다른 글 진단하기</button>
+    <!-- 5. 총평 -->
+    <div class="overall">
+      <div class="o-title">전체 총평</div>
+      <div class="o-text">${e.overall}</div>
+    </div>
+
+    <!-- [신규] 통합 업그레이드 배너 — 맞춤법 진단 / KReaD 분석 / 성장 가이드는 수행평가 상담으로 안내 -->
+    <div class="upgrade-divider">학교 성적으로 더 세밀하게 진단받고 싶다면</div>
+    <div class="upgrade-banner">
+      <div class="ub-title">수행평가 상담 신청하면<br>아래 항목까지 추가로 확인할 수 있어요</div>
+      <div class="ub-sub">전문 언어분석 엔진과 교사 첨삭 기준으로 더 정밀하게 진단합니다.</div>
+      <div class="upgrade-list">
+        <div class="ul-item"><span class="ul-ic">🔤</span>맞춤법 진단</div>
+        <div class="ul-item"><span class="ul-ic">📊</span>크리드(KReaD) 분석</div>
+        <div class="ul-item"><span class="ul-ic">🌱</span>성장 가이드</div>
+      </div>
+      <button class="ub-btn">수행평가 상담 신청하기</button>
+    </div>
+
+    <button class="btn-secondary" id="retryBtn" style="margin-top:16px">← 다른 글 진단하기</button>
     <div style="text-align:center;margin-top:10px"><span id="backHomeLink" style="font-size:12px;color:#999;text-decoration:underline;cursor:pointer">솔루니 홈으로 돌아가기</span></div>
   `;
 }
@@ -807,11 +915,36 @@ function bindEvents(){
   const sb=document.getElementById('submitBtn');
   if(sb){
     sb.addEventListener('click',()=>{
+      if(state.usedCount>=MONTHLY_LIMIT) return; // [신규] 월 제출 제한 가드
+      state.usedCount++; // [신규] 제출 시 월 사용 횟수 차감
       state.screen=1;
       render();
-      setTimeout(()=>{state.screen=2;render();},2000);
+      setTimeout(()=>{
+        state.screen=2;
+        render();
+        // [신규] 방금 제출한 글을 이력 목록 맨 위에 추가
+        if(state.example){
+          historyMock.unshift({date:'2026-07-02', title:state.example.title, genre:state.genre||state.example.genre, grade:state.grade, total:state.example.total, exId:state.example.id});
+        }
+      },2000);
     });
   }
+  // [신규] 진단 이력 보기 / 뒤로가기 / 새 글 진단하기
+  const hl=document.getElementById('historyLink');
+  if(hl) hl.addEventListener('click',()=>{ state.screen='history'; render(); });
+  const hbk=document.getElementById('historyBack');
+  if(hbk) hbk.addEventListener('click',()=>{ state.screen=0; render(); });
+  const hti=document.getElementById('historyToInput');
+  if(hti) hti.addEventListener('click',()=>{ state.screen=0; render(); });
+  document.querySelectorAll('.history-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const ex=examples[parseInt(el.dataset.ex)];
+      if(!ex) return;
+      state.example=ex; state.grade=ex.grade; state.genre=ex.genre; state.text=ex.text;
+      state.screen=2;
+      render();
+    });
+  });
   // 다시
   const rb=document.getElementById('retryBtn');
   if(rb){
@@ -840,8 +973,8 @@ function bindEvents(){
 
 function checkSubmit(){
   const btn=document.getElementById('submitBtn');
-  // 학년·학생글 필수 / 장르는 선택 안 해도 진단 가능 (기타/잘 모르겠음으로 처리)
-  if(btn) btn.disabled=!(state.grade&&state.text);
+  // 학년·학생글 필수 / 장르는 선택 안 해도 진단 가능 (기타/잘 모르겠음으로 처리) / 월 제출 제한 초과 시 비활성화
+  if(btn) btn.disabled=!(state.grade&&state.text)||state.usedCount>=MONTHLY_LIMIT;
 }
 
 render();
