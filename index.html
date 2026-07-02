@@ -118,6 +118,141 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gw-text{font-size:13px;color:#1B5E20;line-height:1.7}
 
 .screen{display:none}.screen.active{display:block}
+
+/* ===== [신규] 솔루니 사이트 메인 UI 목업 (상단배너 진입경로 데모) ===== */
+.home-page{margin:0 -16px 22px}
+
+/* 상단 공지바 */
+.top-announce{background:linear-gradient(90deg,#F04E4E,#EE3D3D);color:#fff;font-size:11px;font-weight:600;text-align:center;padding:7px 10px;display:flex;align-items:center;justify-content:center;gap:6px}
+.top-announce .dot{width:5px;height:5px;border-radius:50%;background:#fff}
+
+/* 헤더 */
+.site-header{background:#fff;border-bottom:1px solid #F0F0F0;padding:12px 16px 0}
+.site-header-row{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px}
+.site-logo{display:flex;align-items:baseline;gap:6px}
+.site-logo b{font-size:17px;font-weight:800;color:#1AAF86;letter-spacing:-.3px}
+.site-logo span{font-size:10.5px;color:#999;font-weight:500}
+.site-menu-ic{font-size:17px;color:#555}
+.site-nav{display:flex;justify-content:center;gap:18px;padding-bottom:10px;border-top:1px solid #F5F5F5;padding-top:9px}
+.site-nav span{font-size:11.5px;color:#555;font-weight:500}
+
+/* 히어로 배너 (캐러셀) */
+.hero-banner{position:relative;background:linear-gradient(135deg,#2FCB98 0%,#17AC7E 100%);padding:30px 22px 26px;color:#fff;overflow:hidden;min-height:150px}
+.hero-deco{position:absolute;right:18px;top:16px;font-size:46px;transform:rotate(6deg);opacity:.95}
+.hero-badge{display:inline-block;font-size:11px;font-weight:700;background:rgba(255,255,255,.22);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.hero-tag{font-size:13px;font-weight:600;color:rgba(255,255,255,.95);margin-bottom:4px}
+.hero-title{font-size:22px;font-weight:800;line-height:1.3;margin-bottom:8px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.9);line-height:1.6;margin-bottom:16px}
+.hero-cta{display:inline-block;background:#fff;color:#128F6C;font-size:12.5px;font-weight:700;padding:8px 18px;border-radius:20px;border:none;cursor:pointer}
+.hero-cta:hover{background:#EFFFFA}
+.hero-ctrl{background:#fff;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 0;border-bottom:1px solid #F0F0F0;font-size:12px;color:#999}
+.hero-ctrl .arrow{cursor:pointer;color:#bbb;font-weight:700;padding:2px 4px}
+.hero-ctrl .arrow:hover{color:#666}
+.hero-ctrl .pageno{color:#888}
+.hero-ctrl .pause{cursor:pointer;color:#bbb}
+
+/* 내게 맞는 수업 찾기 */
+.finder-sec{background:#fff;padding:22px 16px 6px}
+.finder-title{font-size:16px;font-weight:800;color:#111;margin-bottom:12px}
+.finder-box{background:#EAF8F3;border-radius:14px;padding:16px 14px}
+.finder-label{font-size:12px;font-weight:700;color:#444;margin-bottom:8px}
+.finder-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.finder-chip{background:#fff;border:1px solid #E2E2E2;border-radius:8px;padding:7px 0;text-align:center;font-size:11.5px;color:#555;font-weight:500;flex:1 0 22%}
+.finder-confirm{width:100%;padding:12px;border:none;border-radius:10px;background:#1AAF86;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+
+/* 공지사항 */
+.notice-sec{background:#fff;padding:22px 16px 6px}
+.notice-title{font-size:16px;font-weight:800;color:#111;margin-bottom:10px}
+.notice-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #F2F2F2;font-size:12px}
+.notice-item .n-txt{color:#333}
+.notice-item .n-badge{color:#1AAF86;font-weight:700;margin-right:5px;font-size:11px}
+.notice-item .n-date{color:#aaa;font-size:11px;white-space:nowrap;margin-left:8px}
+
+/* 서비스 바로가기 */
+.svc-sec{background:#fff;padding:22px 16px 26px}
+.svc-title{font-size:16px;font-weight:800;color:#111;margin-bottom:12px}
+.svc-grid{display:flex;gap:8px}
+.svc-item{flex:1;text-align:center}
+.svc-ic{width:46px;height:46px;border-radius:50%;background:#F1F1F1;display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto 6px}
+.svc-item span{font-size:10.5px;color:#555;font-weight:500;line-height:1.4;display:block}
+
+.entry-divider{display:flex;align-items:center;gap:10px;margin:6px 0 20px;color:#bbb;font-size:11px}
+.entry-divider::before,.entry-divider::after{content:'';flex:1;height:1px;background:#EEE}
+
+/* 독서논술 선생님 영상 섹션 */
+.video-sec{background:linear-gradient(135deg,#2FCB98,#17AC7E);padding:34px 16px 30px;text-align:center;color:#fff}
+.video-sec .v-title{font-size:16.5px;font-weight:800;margin-bottom:8px}
+.video-sec .v-sub{font-size:11px;color:rgba(255,255,255,.92);line-height:1.7;margin-bottom:18px}
+.video-thumb{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#16324A,#0B1E2E);height:145px;margin-bottom:18px;display:flex;align-items:center;justify-content:center}
+.video-thumb .vt-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.4);color:#fff;font-size:9.5px;padding:5px 9px;border-radius:7px;text-align:left;line-height:1.5}
+.video-thumb .play-btn{width:42px;height:42px;border-radius:50%;background:#FF2D2D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
+.video-thumb .yt-tag{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.5);color:#fff;font-size:9.5px;padding:3px 9px;border-radius:12px}
+.video-cta{display:inline-block;background:#fff;color:#128F6C;font-size:12.5px;font-weight:700;padding:9px 26px;border-radius:20px;border:none;cursor:pointer}
+
+/* 교과서가 보인다 섹션 */
+.book-sec{background:#EFEDFB;padding:34px 16px 30px;text-align:center}
+.book-sec .b-title{font-size:17px;font-weight:800;color:#1AAF86;margin-bottom:6px}
+.book-sec .b-sub{font-size:13.5px;font-weight:700;color:#222;margin-bottom:8px}
+.book-sec .b-desc{font-size:10.5px;color:#888;line-height:1.7;margin-bottom:20px}
+.bar-chart{display:flex;align-items:flex-end;justify-content:center;gap:7px;height:88px;margin-bottom:8px}
+.bar-chart .bc-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar-chart .bc-bar{width:11px;border-radius:3px 3px 0 0}
+.bar-chart .bc-lbl{font-size:8.5px;color:#999;margin-top:5px}
+.chart-legend{display:flex;justify-content:center;gap:14px;margin-bottom:22px;font-size:10px;color:#666}
+.chart-legend .lg-dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:4px}
+.donut-row{display:flex;justify-content:center;gap:26px;margin-bottom:22px}
+.donut{width:84px;text-align:center}
+.donut svg{margin-bottom:6px}
+.donut .d-lbl{font-size:10px;color:#666;font-weight:600}
+.book-cta{background:#4B3FA6;color:#fff;font-size:12.5px;font-weight:700;padding:9px 26px;border-radius:20px;border:none;cursor:pointer}
+
+/* 수행평가가 보인다 섹션 */
+.perf-sec{background:linear-gradient(160deg,#FFC94D,#FFA928);padding:34px 16px 30px;text-align:center;color:#fff}
+.perf-sec .p-title{font-size:17px;font-weight:800;margin-bottom:6px}
+.perf-sec .p-sub{font-size:13.5px;font-weight:700;margin-bottom:8px}
+.perf-sec .p-desc{font-size:10.5px;color:rgba(255,255,255,.94);line-height:1.7;margin-bottom:20px}
+.perf-cards{display:flex;gap:8px;margin-bottom:20px}
+.perf-card{flex:1;background:#fff;border-radius:12px;padding:14px 6px;color:#333}
+.perf-card .pc-ic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;margin:0 auto 8px;color:#fff}
+.perf-card .pc-title{font-size:11.5px;font-weight:700;margin-bottom:5px}
+.perf-card .pc-desc{font-size:9.5px;color:#888;line-height:1.5}
+.perf-cta{background:#4B3FA6;color:#fff;font-size:12.5px;font-weight:700;padding:9px 26px;border-radius:20px;border:none;cursor:pointer}
+
+/* 수준이 보인다 섹션 */
+.level-sec{background:linear-gradient(160deg,#E3F8F5,#D3F3EF);padding:34px 16px 30px;text-align:center}
+.level-sec .l-title{font-size:17px;font-weight:800;color:#0E7C6B;margin-bottom:6px}
+.level-sec .l-sub{font-size:13.5px;font-weight:700;color:#222;margin-bottom:8px}
+.level-sec .l-desc{font-size:10.5px;color:#777;line-height:1.7;margin-bottom:18px}
+.hex-wrap{position:relative;width:230px;height:200px;margin:0 auto 18px}
+.hex-lbl{position:absolute;font-size:9.5px;font-weight:700;color:#555;white-space:nowrap}
+.level-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:4px}
+.level-pill{background:#fff;border:1px solid #CDEFE8;color:#128F6C;font-size:10px;font-weight:600;padding:6px 12px;border-radius:16px}
+
+/* 상품 캐러셀 섹션 */
+.prod-sec{background:#fff;padding:32px 16px 8px;text-align:center}
+.prod-sec .pr-title{font-size:15.5px;font-weight:800;color:#111;margin-bottom:16px;line-height:1.5}
+.prod-row{display:flex;gap:10px;margin-bottom:10px}
+.prod-card{flex:1;text-align:left}
+.prod-img{height:88px;border-radius:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;position:relative}
+.prod-badge{position:absolute;top:6px;left:6px;background:rgba(255,255,255,.92);color:#333;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px}
+.prod-name{font-size:10px;color:#888;margin-bottom:2px}
+.prod-desc{font-size:10.5px;font-weight:600;color:#222;line-height:1.4}
+.prod-pager{display:flex;align-items:center;justify-content:center;gap:14px;font-size:12px;color:#999;margin-bottom:18px}
+.prod-pager .arrow{color:#ccc}
+
+/* 푸터 */
+.site-footer{background:#F7F7F7;padding:26px 16px 24px}
+.footer-sns{display:flex;justify-content:center;gap:9px;margin-bottom:14px}
+.sns-ic{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.footer-tel{text-align:center;font-size:11px;color:#555;margin-bottom:18px}
+.footer-links{text-align:center;font-size:11px;margin-bottom:14px}
+.footer-links b{color:#333;margin-right:12px;text-decoration:underline;cursor:pointer;font-weight:700}
+.footer-links span{color:#999}
+.footer-corp{text-align:center;font-size:9px;color:#aaa;line-height:1.8}
+.footer-corp b{display:block;color:#777;font-size:10.5px;margin-bottom:6px}
+
+.float-row{display:flex;justify-content:flex-end;padding:0 16px;margin-top:-52px;margin-bottom:36px;position:relative;z-index:5}
+.float-btn{background:#1AAF86;color:#fff;font-size:11.5px;font-weight:700;padding:10px 15px;border-radius:24px;box-shadow:0 4px 14px rgba(0,0,0,.18);display:inline-flex;align-items:center;gap:5px}
 </style>
 </head>
 <body>
@@ -204,14 +339,216 @@ const examples = [
   }
 ];
 
-let state = {screen:0, grade:'', genre:'', text:'', example:null};
+// screen: 'home'(신규 진입경로 - 사이트 메인 UI 목업) → 0(글 입력) → 1(분석 중) → 2(결과 확인)
+let state = {screen:'home', grade:'', genre:'', text:'', example:null, bannerIndex:1};
+
+// 히어로 배너 캐러셀 슬라이드 — index0: 기존 '성장로그' 배너 / index1: [신규] '글쓰기 체험' 배너
+const heroSlides = [
+  {badge:null, tag:'성장이 보인다', title:'솔루니 성장로그', sub:'학습 성장을 한 눈에 확인', cta:'바로가기', deco:'📗', action:null},
+  {badge:'NEW', tag:'수준이 보인다', title:'글쓰기 체험', sub:'AI가 우리 아이 글을 분석해 수준과 개선점을 바로 알려드려요', cta:'체험하기', deco:'✍️', action:'writing'}
+];
 
 function render(){
   const app = document.getElementById('app');
-  if(state.screen===0) app.innerHTML = renderInput();
+  if(state.screen==='home') app.innerHTML = renderHome();
+  else if(state.screen===0) app.innerHTML = renderInput();
   else if(state.screen===1) app.innerHTML = renderAnalyzing();
   else if(state.screen===2) app.innerHTML = renderResult();
   bindEvents();
+}
+
+function renderHome(){
+  const s = heroSlides[state.bannerIndex];
+  return `
+    <!-- ===== [신규 진입경로] 솔루니 사이트 메인 UI 목업 =====
+         실제 사이트의 상단 공지바 / 헤더 / 히어로 배너 캐러셀 구조를 재현했습니다.
+         히어로 배너 캐러셀에 기존 '성장로그' 슬라이드와 함께
+         '일반형 글쓰기' 진단 서비스를 알리는 [신규] 슬라이드(배너명: 글쓰기 체험)를 추가하는 안입니다.
+         ‹ › 화살표 또는 하단 점(dot)으로 슬라이드 전환, '체험하기' 클릭 시 진단 플로우로 진입합니다. -->
+    <div class="home-page">
+      <div class="top-announce"><span class="dot"></span>대교 창립 50년, 당신을 배웁니다</div>
+
+      <div class="site-header">
+        <div class="site-header-row">
+          <div class="site-logo"><b>솔루니</b><span>독서토론논술</span></div>
+          <span class="site-menu-ic">☰</span>
+        </div>
+        <div class="site-nav">
+          <span>솔루니 소개</span><span>학습 서비스</span><span>새소식</span><span>성장로그</span>
+        </div>
+      </div>
+
+      <div class="hero-banner">
+        <div class="hero-deco">${s.deco}</div>
+        ${s.badge?`<div class="hero-badge">${s.badge}</div>`:''}
+        <div class="hero-tag">${s.tag}</div>
+        <div class="hero-title">${s.title}</div>
+        <div class="hero-sub">${s.sub}</div>
+        <button class="hero-cta" id="heroCta" data-action="${s.action||''}">${s.cta}</button>
+      </div>
+      <div class="hero-ctrl">
+        <span class="arrow" id="heroPrev">‹</span>
+        <span class="pageno">${state.bannerIndex+1} / ${heroSlides.length}</span>
+        <span class="pause">⏸</span>
+        <span class="arrow" id="heroNext">›</span>
+      </div>
+
+      <div class="finder-sec">
+        <div class="finder-title">내게 맞는 솔루니 수업 찾기</div>
+        <div class="finder-box">
+          <div class="finder-label">연령선택</div>
+          <div class="finder-chips">
+            ${['7세 이하','초등 1학년','초등 2학년','초등 3학년','초등 4학년','초등 5학년','초등 6학년','중등'].map(x=>`<div class="finder-chip">${x}</div>`).join('')}
+          </div>
+          <div class="finder-label">과정선택</div>
+          <div class="finder-chips">
+            ${['독서논술','교과논술','과제해결 프로젝트','토론'].map(x=>`<div class="finder-chip">${x}</div>`).join('')}
+          </div>
+          <button class="finder-confirm">확인</button>
+        </div>
+      </div>
+
+      <div class="notice-sec">
+        <div class="notice-title">공지사항</div>
+        <div class="notice-item"><span class="n-txt"><span class="n-badge">[발표]</span>솔루니 전국 AI 논술대회 수상자 발표(26년 6월 대회)</span><span class="n-date">26-06-17</span></div>
+        <div class="notice-item"><span class="n-txt"><span class="n-badge">[이벤트]</span>우리 선생님을 칭찬해요!</span><span class="n-date">26-05-12</span></div>
+        <div class="notice-item"><span class="n-txt"><span class="n-badge">[공지]</span>10월 눈높이·솔루니 고객만족도 조사 안내</span><span class="n-date">25-10-27</span></div>
+      </div>
+
+      <div class="svc-sec">
+        <div class="svc-title">서비스 바로가기</div>
+        <div class="svc-grid">
+          <div class="svc-item"><div class="svc-ic">💬</div><span>상담<br>신청하기</span></div>
+          <div class="svc-item"><div class="svc-ic">🏠</div><span>내 주변<br>교실 찾기</span></div>
+          <div class="svc-item"><div class="svc-ic">🧑‍🏫</div><span>교사<br>모집 안내</span></div>
+          <div class="svc-item"><div class="svc-ic">📞</div><span>고객<br>센터</span></div>
+        </div>
+      </div>
+
+      <div class="video-sec">
+        <div class="v-title">독서논술 전문 선생님의 전문지도!</div>
+        <div class="v-sub">직자의 생각과 저마다 다른 상상을 표현하는 4,248,790명(06년 3월~23년 3월 회원수)의 진솔한<br>키움과 배움의 이야기를 독서논술 선생님이 지도합니다.</div>
+        <div class="video-thumb">
+          <div class="vt-badge">[대교 알아주는 선생님] - 솔루니 임형란 선생님<br>세상에서 가장 큰 교실 다교</div>
+          <div class="play-btn">▶</div>
+          <div class="yt-tag">다음에서 보기 ▶ YouTube</div>
+        </div>
+        <button class="video-cta">솔루니 선생님</button>
+      </div>
+
+      <div class="book-sec">
+        <div class="b-title">교과서가 보인다</div>
+        <div class="b-sub">교과서 분석한 읽기수준 설계!</div>
+        <div class="b-desc">솔루니 도서는 교과서보다 독해수준은 조금 더 높게,<br>문학 비중은 비슷하게 설계되어 교과 목표를 완벽 대비합니다.</div>
+        <div class="bar-chart">
+          ${[28,36,44,52,60,68,78].map((h,i)=>`<div class="bc-col"><div class="bc-bar" style="height:${h}%;background:${i%2===0?'#B9B3EE':'#6C5FD8'}"></div><div class="bc-lbl">${['1학년','2학년','3학년','4학년','5학년','6학년','중등'][i]}</div></div>`).join('')}
+        </div>
+        <div class="chart-legend"><span><i class="lg-dot" style="background:#B9B3EE"></i>교과서</span><span><i class="lg-dot" style="background:#6C5FD8"></i>솔루니</span></div>
+        <div class="donut-row">
+          <div class="donut">
+            <svg width="72" height="72" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E9E6FB" stroke-width="4"></circle>
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#6C5FD8" stroke-width="4" stroke-dasharray="68 32" stroke-dashoffset="25" stroke-linecap="round"></circle>
+              <text x="18" y="21" text-anchor="middle" font-size="8" font-weight="700" fill="#4B3FA6">68%</text>
+            </svg>
+            <div class="d-lbl">독해 난이도</div>
+          </div>
+          <div class="donut">
+            <svg width="72" height="72" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E9E6FB" stroke-width="4"></circle>
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="#22B37E" stroke-width="4" stroke-dasharray="78 22" stroke-dashoffset="25" stroke-linecap="round"></circle>
+              <text x="18" y="21" text-anchor="middle" font-size="8" font-weight="700" fill="#128F6C">78%</text>
+            </svg>
+            <div class="d-lbl">문학·비문학 비중</div>
+          </div>
+        </div>
+        <button class="book-cta">솔루니 독서</button>
+      </div>
+
+      <div class="perf-sec">
+        <div class="p-title">수행평가가 보인다</div>
+        <div class="p-sub">수행평가 필수 문형 미리쓰기!</div>
+        <div class="p-desc">학교 수행평가에서 필수인 많은 문형쓰기 경험을 쌓아갑니다.<br>토론과 발표 활동을 통해 학교수업을 앞서 갑니다.</div>
+        <div class="perf-cards">
+          <div class="perf-card"><div class="pc-ic" style="background:#5B8DEF">📖</div><div class="pc-title">구조독해</div><div class="pc-desc">교과 과제<br>핵심 파악하기</div></div>
+          <div class="perf-card"><div class="pc-ic" style="background:#F06AA0">💬</div><div class="pc-title">토의토론</div><div class="pc-desc">생각을 교환하고<br>논리적 정리하기</div></div>
+          <div class="perf-card"><div class="pc-ic" style="background:#8C6CE0">✏️</div><div class="pc-title">서술형쓰기</div><div class="pc-desc">형식에 맞춰<br>글로 완성하기</div></div>
+        </div>
+        <button class="perf-cta">솔루니 수업활동</button>
+      </div>
+
+      <div class="level-sec">
+        <div class="l-title">수준이 보인다</div>
+        <div class="l-sub">AI기술로 글쓰기 수준 분석!</div>
+        <div class="l-desc">인공지능 분석 기술을 활용하여 수준을 분석하고 지속적인<br>맞춤 독서논술도를 진행합니다.</div>
+        <div class="hex-wrap">
+          <svg width="200" height="190" viewBox="0 0 200 190" style="position:absolute;left:15px;top:5px">
+            <polygon points="100,95 100,15 169,55" fill="#FFE3EC"></polygon>
+            <polygon points="100,95 169,55 169,135" fill="#FFF3CE"></polygon>
+            <polygon points="100,95 169,135 100,175" fill="#D9F0FF"></polygon>
+            <polygon points="100,95 100,175 31,135" fill="#DCF5E8"></polygon>
+            <polygon points="100,95 31,135 31,55" fill="#E8E1FB"></polygon>
+            <polygon points="100,95 31,55 100,15" fill="#FFE7D1"></polygon>
+            <circle cx="100" cy="95" r="33" fill="#fff"></circle>
+            <circle cx="100" cy="95" r="33" fill="none" stroke="#EDEDED" stroke-width="1"></circle>
+            <text x="100" y="101" text-anchor="middle" font-size="16" font-weight="800" fill="#6C5FD8">AI</text>
+          </svg>
+          <div class="hex-lbl" style="left:130px;top:8px;transform:translate(-50%,0);text-align:center">문법 정확성</div>
+          <div class="hex-lbl" style="left:196px;top:58px;transform:translate(-100%,-50%);text-align:right">어휘 풍부성</div>
+          <div class="hex-lbl" style="left:196px;top:138px;transform:translate(-100%,-50%);text-align:right">문장 구사력</div>
+          <div class="hex-lbl" style="left:130px;top:186px;transform:translate(-50%,-100%);text-align:center">주제 명확성</div>
+          <div class="hex-lbl" style="left:16px;top:138px;transform:translate(0,-50%);text-align:left">조직과 전개</div>
+          <div class="hex-lbl" style="left:16px;top:58px;transform:translate(0,-50%);text-align:left">의도 표현력</div>
+        </div>
+        <div class="level-pills">
+          <span class="level-pill">글쓰기 AI평가</span>
+          <span class="level-pill">완독카드</span>
+          <span class="level-pill">서사논술</span>
+          <span class="level-pill">ChatGPT 질문발전소</span>
+        </div>
+      </div>
+
+      <div class="prod-sec">
+        <div class="pr-title">우리 아이에게 꼭 필요한<br>솔루니 수업 시작!</div>
+        <div class="prod-row">
+          <div class="prod-card">
+            <div class="prod-img" style="background:linear-gradient(160deg,#FFB199,#FF8A65)"><span class="prod-badge">문학순 필독 5종</span>📚</div>
+            <div class="prod-name">읽고 이해하는 힘 향상</div>
+            <div class="prod-desc">초등 3학년<br>교과논술 이해</div>
+          </div>
+          <div class="prod-card">
+            <div class="prod-img" style="background:linear-gradient(160deg,#8FB8FF,#5B8DEF)"><span class="prod-badge">종합 국어 완성</span>📖</div>
+            <div class="prod-name">중등 국어 종합수행평가</div>
+            <div class="prod-desc">서술형 쓰기<br>완성하기</div>
+          </div>
+          <div class="prod-card">
+            <div class="prod-img" style="background:linear-gradient(160deg,#B79CFF,#8C6CE0)"><span class="prod-badge">수능 1% 국어전문가</span>📱</div>
+            <div class="prod-name">AI첨삭으로 완성</div>
+            <div class="prod-desc">수능독해<br>완성하기</div>
+          </div>
+        </div>
+        <div class="prod-pager"><span class="arrow">‹</span><span>4 / 7</span><span class="arrow">›</span></div>
+      </div>
+
+      <div class="site-footer">
+        <div class="footer-sns">
+          <div class="sns-ic" style="background:#03C75A">N</div>
+          <div class="sns-ic" style="background:#1AAF86">카</div>
+          <div class="sns-ic" style="background:#FF0000">▶</div>
+        </div>
+        <div class="footer-tel">📞 솔루니 수업안내 080-222-0909</div>
+        <div class="footer-links"><b>개인정보처리방침</b><span>이용약관</span></div>
+        <div class="footer-corp">
+          <b>DAEKYO</b>
+          (주)대교ㅣ대표이사 강영중ㅣ서울 서초구 마방로 68 (양재동, 대교타워)<br>
+          사업자등록번호 000-00-00000ㅣ통신판매업신고 제0000-서울서초-0000호<br>
+          Copyright ⓒ DAEKYO. All Rights Reserved.
+        </div>
+      </div>
+    </div>
+    <div class="float-row"><div class="float-btn">💬 상담</div></div>
+    <div class="entry-divider">아래는 배너 클릭 시 진입하는 '일반형 글쓰기 체험' 프로토타입</div>
+  `;
 }
 
 function renderInput(){
@@ -391,10 +728,23 @@ function renderResult(){
     </div>`).join('')}
 
     <button class="btn-secondary" id="retryBtn">← 다른 글 진단하기</button>
+    <div style="text-align:center;margin-top:10px"><span id="backHomeLink" style="font-size:12px;color:#999;text-decoration:underline;cursor:pointer">솔루니 홈으로 돌아가기</span></div>
   `;
 }
 
 function bindEvents(){
+  // [신규] 히어로 배너 CTA — '글쓰기 체험' 슬라이드일 때만 진단 플로우로 진입
+  const hc=document.getElementById('heroCta');
+  if(hc){
+    hc.addEventListener('click',()=>{
+      if(hc.dataset.action==='writing'){ state.screen=0; render(); }
+    });
+  }
+  // [신규] 캐러셀 이전/다음 화살표
+  const hp=document.getElementById('heroPrev');
+  if(hp) hp.addEventListener('click',()=>{ state.bannerIndex=(state.bannerIndex-1+heroSlides.length)%heroSlides.length; render(); });
+  const hn=document.getElementById('heroNext');
+  if(hn) hn.addEventListener('click',()=>{ state.bannerIndex=(state.bannerIndex+1)%heroSlides.length; render(); });
   // 학교급 탭
   document.querySelectorAll('.school-tab').forEach(b=>{
     b.addEventListener('click',()=>{
@@ -468,6 +818,21 @@ function bindEvents(){
     rb.addEventListener('click',()=>{
       state.screen=0;
       state.example=null;
+      state.grade='';
+      state.genre='';
+      state.text='';
+      render();
+    });
+  }
+  const bh=document.getElementById('backHomeLink');
+  if(bh){
+    bh.addEventListener('click',()=>{
+      state.screen='home';
+      state.bannerIndex=1;
+      state.example=null;
+      state.grade='';
+      state.genre='';
+      state.text='';
       render();
     });
   }
