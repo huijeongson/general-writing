@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        { "type": "host", "value": "general-writting-lms.vercel.app" }
+      ],
+      "destination": "/teacher.html"
+    }
+  ]
+}
