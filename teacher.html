@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중등 교과 수행평가 LMS</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif; background:#F4F5F7; color:#1F2A37; }
+
+  .topbar { display:flex; align-items:center; justify-content:space-between; height:64px; padding:0 24px; background:#fff; border-bottom:1px solid #E7E9ED; }
+  .topbar-left { display:flex; align-items:center; gap:14px; }
+  .hamburger { width:22px; height:22px; display:flex; flex-direction:column; justify-content:center; gap:4px; cursor:pointer; }
+  .hamburger span { display:block; height:2px; background:#4A5563; border-radius:1px; }
+  .brand { font-size:17px; font-weight:800; color:#1F2A37; }
+  .brand .accent { color:#2563EB; margin-left:4px; }
+  .topbar-right { display:flex; align-items:center; gap:14px; }
+  .org-tag { font-size:13px; color:#8A929E; font-weight:600; }
+  .user-pill { display:flex; align-items:center; gap:6px; border:1.4px solid #E1E5EA; border-radius:999px; padding:7px 14px; font-size:13px; font-weight:700; color:#26313D; cursor:pointer; }
+  .user-pill svg { flex-shrink:0; }
+  .logout { width:20px; height:20px; color:#8A929E; cursor:pointer; }
+
+  .layout { display:flex; min-height:calc(100vh - 64px); }
+  .sidebar { width:250px; background:#fff; border-right:1px solid #E7E9ED; padding:16px 12px; flex-shrink:0; }
+  .nav-item { display:flex; align-items:center; gap:11px; padding:12px 14px; border-radius:10px; font-size:14.5px; font-weight:700; color:#5A6472; cursor:pointer; margin-bottom:4px; }
+  .nav-item svg { flex-shrink:0; }
+  .nav-item:hover { background:#F4F5F7; }
+  .nav-item.active { background:#EAF1FE; color:#2563EB; }
+  .nav-item.active svg { color:#2563EB; }
+  .nav-divider { height:1px; background:#EDEFF2; margin:12px 6px; }
+
+  .content { flex:1; padding:28px 32px; }
+  .content-header { margin-bottom:18px; }
+  .content-title { font-size:19px; font-weight:800; color:#1F2A37; margin-bottom:4px; }
+  .content-sub { font-size:13px; color:#8A929E; }
+
+  .placeholder { display:flex; align-items:center; justify-content:center; height:320px; color:#B7BFC8; font-size:13.5px; }
+
+  .table-card { background:#fff; border:1px solid #E7E9ED; border-radius:14px; overflow:hidden; }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; white-space:nowrap; }
+  thead th { background:#F8F9FB; color:#6B7480; font-weight:700; font-size:12.5px; text-align:left; padding:12px 16px; border-bottom:1px solid #E7E9ED; }
+  tbody td { padding:13px 16px; border-bottom:1px solid #F0F1F4; color:#26313D; }
+  tbody tr:last-child td { border-bottom:none; }
+  tbody tr:hover { background:#FAFBFC; }
+  .col-center { text-align:center; }
+  .badge { display:inline-block; font-size:11.5px; font-weight:700; padding:3px 10px; border-radius:999px; background:#EAF1FE; color:#2563EB; }
+  .score { font-weight:800; color:#2563EB; }
+  .btn-report { border:1.4px solid #2563EB; background:#fff; color:#2563EB; font-size:12.5px; font-weight:700; padding:6px 13px; border-radius:999px; cursor:pointer; }
+  .btn-report:hover { background:#EAF1FE; }
+
+  .modal-overlay { position:fixed; inset:0; background:rgba(15,23,42,.45); display:none; align-items:center; justify-content:center; padding:24px; z-index:1000; }
+  .modal-overlay.open { display:flex; }
+  .modal { width:100%; max-width:480px; max-height:86vh; overflow-y:auto; background:#fff; border-radius:16px; padding:0; }
+  .modal-head { position:sticky; top:0; background:#fff; display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid #EEF0F3; }
+  .modal-head-title { font-size:15px; font-weight:800; color:#1F2A37; }
+  .modal-close { width:26px; height:26px; border-radius:50%; background:#F2F4F6; color:#8A929E; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; }
+  .modal-body { padding:20px 22px 26px; }
+  .score-card { background:linear-gradient(135deg,#3B82F6,#2563EB); border-radius:16px; padding:18px 20px; color:#fff; margin-bottom:16px; }
+  .score-card .stitle { font-size:12.5px; color:rgba(255,255,255,.9); font-weight:600; margin-bottom:8px; }
+  .score-card .sbig { font-size:38px; font-weight:800; }
+  .score-card .sbig span { font-size:13px; font-weight:600; color:rgba(255,255,255,.85); margin-left:4px; }
+  .submitted-box { background:#fff; border:1px solid #EEF0F3; border-radius:14px; padding:14px 16px; margin-bottom:14px; }
+  .submitted-box .label { font-size:11.5px; font-weight:700; color:#8A929E; margin-bottom:8px; }
+  .submitted-box .text { font-size:12.5px; color:#4A5563; line-height:1.8; }
+  .section-title { font-size:13px; font-weight:800; color:#1F2A37; margin:16px 0 10px; }
+  .area-item { background:#fff; border:1px solid #EEF0F3; border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+  .area-item .arow { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .area-chip { font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; background:#EAF1FE; color:#2563EB; }
+  .area-score { font-size:11.5px; color:#98A2AE; font-weight:600; margin-left:auto; }
+  .area-bar-track { height:6px; background:#EDF0F2; border-radius:3px; overflow:hidden; margin-bottom:8px; }
+  .area-bar-fill { height:100%; background:#2563EB; border-radius:3px; }
+  .area-text { font-size:11.5px; color:#5A6472; line-height:1.6; }
+  .para-item { background:#fff; border:1px solid #EEF0F3; border-radius:12px; padding:11px 14px; margin-bottom:7px; }
+  .para-item .pnum { font-size:11px; font-weight:800; color:#2563EB; margin-bottom:5px; }
+  .para-item .ptext { font-size:12px; color:#4A5563; line-height:1.6; }
+  .overall-box { background:#F1F6FE; border:1px solid #D6E4FB; border-radius:12px; padding:14px 15px; margin-top:14px; }
+  .overall-box .otitle { font-size:11px; font-weight:800; color:#2563EB; letter-spacing:.04em; margin-bottom:7px; }
+  .overall-box .otext { font-size:12.5px; color:#31414F; line-height:1.8; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+      <div class="brand">중등 교과 수행평가 <span class="accent">LMS</span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="org-tag">[LC] 대교 &rsaquo;</div>
+      <div class="user-pill">김대교 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A929E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></div>
+      <svg class="logout" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="sidebar">
+      <div class="nav-item" data-target="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>제출 과제</div>
+      <div class="nav-item" data-target="students"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>학생 관리</div>
+      <div class="nav-item" data-target="alimtalk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>알림톡</div>
+      <div class="nav-divider"></div>
+      <div class="nav-item active" data-target="ai-report"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>글쓰기 AI 진단결과</div>
+    </div>
+
+    <div class="content">
+      <div id="view-submit" class="view" style="display:none">
+        <div class="content-header"><div class="content-title">제출 과제</div></div>
+        <div class="placeholder">준비 중입니다.</div>
+      </div>
+      <div id="view-students" class="view" style="display:none">
+        <div class="content-header"><div class="content-title">학생 관리</div></div>
+        <div class="placeholder">준비 중입니다.</div>
+      </div>
+      <div id="view-alimtalk" class="view" style="display:none">
+        <div class="content-header"><div class="content-title">알림톡</div></div>
+        <div class="placeholder">준비 중입니다.</div>
+      </div>
+
+      <div id="view-ai-report" class="view">
+        <div class="content-header">
+          <div class="content-title">글쓰기 AI 진단결과</div>
+          <div class="content-sub">학생들이 제출한 글쓰기 AI 진단 과제를 확인합니다.</div>
+        </div>
+        <div class="table-card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-center">순번</th>
+                  <th>회원라벨</th>
+                  <th>학습회원번호</th>
+                  <th>회원명</th>
+                  <th>과제 제목</th>
+                  <th class="col-center">과제 점수</th>
+                  <th>제출일</th>
+                  <th class="col-center">결과리포트</th>
+                </tr>
+              </thead>
+              <tbody id="submissionRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="reportOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-head-title" id="reportModalTitle">결과리포트</div>
+        <div class="modal-close" id="reportModalClose">&times;</div>
+      </div>
+      <div class="modal-body" id="reportModalBody"></div>
+    </div>
+  </div>
+
+<script>
+  var submissions = [
+    { no:1, memberLabel:'학습회원', memberNo:'0012341234', name:'손희정', title:'어린왕자 독서감상문', genre:'독서감상문', grade:'6학년', score:80, date:'2026.07.10',
+      text:'생텍쥐페리의 어린왕자를 읽고 가장 인상 깊었던 장면은 여우가 왕자에게 "길들인다는 것"의 의미를 알려주는 부분이었다. 관계를 맺는다는 것이 서로에게 특별한 존재가 되는 것임을 깨달았다.',
+      areas:[ {label:'주제·목적 적합성', score:19, max:25, text:'독후감의 형식에 맞게 느낀 점을 잘 정리했다.'}, {label:'내용 완성도', score:29, max:35, text:'인상 깊은 장면과 그 이유가 구체적으로 드러난다.'}, {label:'조직과 전개', score:13, max:15, text:'도입-전개-마무리 흐름이 안정적이다.'}, {label:'표현과 규범', score:19, max:25, text:'문장 호응이 자연스럽고 맞춤법 오류가 거의 없다.'} ],
+      paras:['도입에서 책 제목과 인상 깊은 장면을 바로 제시해 명료하다.','여우와의 대화 장면을 인용하며 자신의 생각을 덧붙인 점이 좋다.','마무리에서 느낀 점을 한 번 더 요약하면 완성도가 더 높아지겠다.'],
+      overall:'책의 핵심 주제를 정확히 짚어내고 자신의 언어로 재해석한 점이 돋보인다. 인상 깊은 장면에 대한 구체적 근거 제시가 좋았다.' },
+    { no:2, memberLabel:'학습회원', memberNo:'0012341235', name:'손희정', title:'봉사활동 후기 (일기·생활문)', genre:'일기·생활문', grade:'4학년', score:78, date:'2026.06.28',
+      text:'오늘은 처음으로 요양원 봉사활동을 다녀왔다. 할머니 할아버지들이 계신 방에 들어갔을 때 긴장이 됐다. 한 할머니께서 먼저 손을 잡아 주셔서 마음이 놓였다.',
+      areas:[ {label:'주제·목적 적합성', score:20, max:25, text:'봉사활동이라는 주제와 일기 형식이 잘 맞는다.'}, {label:'내용 완성도', score:26, max:35, text:'구체적인 경험이 잘 드러나나 성장·변화 표현이 아쉽다.'}, {label:'조직과 전개', score:13, max:15, text:'흐름이 안정적이며 감정 변화가 자연스럽다.'}, {label:'표현과 규범', score:19, max:25, text:'정서 표현이 진솔하나 일부 문장이 어색하다.'} ],
+      paras:['도입부에서 긴장감이 잘 드러난다.','할머니 손의 감촉 등 감각적 묘사가 생생하다.','마무리의 성찰을 더 구체적으로 쓰면 좋겠다.'],
+      overall:'처음 봉사활동에서 느낀 긴장감과 따뜻함을 진솔하게 담았다. 마무리의 성찰을 더 구체화하면 글이 깊어질 것이다.' },
+    { no:3, memberLabel:'학습회원', memberNo:'0012341236', name:'손희정', title:'물의 세 가지 상태 (설명문)', genre:'설명문', grade:'5학년', score:91, date:'2026.06.21',
+      text:'물은 온도에 따라 세 가지 상태로 변한다. 고체인 얼음, 액체인 물, 기체인 수증기로 상태가 바뀌며 이를 물의 상태 변화라고 한다.',
+      areas:[ {label:'주제·목적 적합성', score:24, max:25, text:'설명문의 목적에 맞게 정확한 정보를 전달한다.'}, {label:'내용 완성도', score:32, max:35, text:'세 가지 상태를 순서대로 논리적으로 설명했다.'}, {label:'조직과 전개', score:14, max:15, text:'첫째-둘째-셋째 구조로 명확하게 조직했다.'}, {label:'표현과 규범', score:21, max:25, text:'문장이 간결하고 용어 사용이 정확하다.'} ],
+      paras:['정의를 먼저 제시하고 사례로 이어가는 구조가 좋다.','각 상태의 특징을 구체적 예시로 설명했다.','마무리 문장으로 전체 내용을 잘 요약했다.'],
+      overall:'설명문의 형식적 완성도가 매우 높다. 논리적 순서와 정확한 용어 사용이 인상적이다.' },
+    { no:4, memberLabel:'학습회원', memberNo:'0012341237', name:'손희정', title:'봄비 (시 창작)', genre:'시', grade:'4학년', score:84, date:'2026.05.14',
+      text:'봄비가 소리 없이/ 마당을 적신다/ 새싹들이 기지개를 켜고/ 봄이 왔다고 속삭인다',
+      areas:[ {label:'주제·목적 적합성', score:21, max:25, text:'봄이라는 계절감을 잘 담아냈다.'}, {label:'내용 완성도', score:28, max:35, text:'감각적 이미지를 활용해 생동감을 주었다.'}, {label:'조직과 전개', score:13, max:15, text:'연 구성이 짧고 리듬감이 있다.'}, {label:'표현과 규범', score:22, max:25, text:'의인법 등 비유 표현을 적절히 사용했다.'} ],
+      paras:['1연에서 소리 없는 봄비의 이미지를 잘 표현했다.','2연의 의인화가 시의 분위기를 살린다.','조금 더 긴 호흡으로 확장하면 좋겠다.'],
+      overall:'짧은 분량 안에 계절의 변화를 감각적으로 담아낸 점이 좋다. 비유 표현이 자연스럽다.' },
+    { no:5, memberLabel:'학습회원', memberNo:'0023451234', name:'손희진', title:'가족 여행 기행문', genre:'기행문', grade:'3학년', score:72, date:'2026.07.05',
+      text:'가족과 함께 떠난 여행에서 바다를 처음 보았다. 파도 소리가 크고 시원해서 신기했다. 모래사장에서 조개껍데기도 주웠다.',
+      areas:[ {label:'주제·목적 적합성', score:17, max:25, text:'기행문의 여정과 감상이 드러나나 순서가 다소 불명확하다.'}, {label:'내용 완성도', score:23, max:35, text:'인상 깊은 장면은 있으나 구체성이 더 필요하다.'}, {label:'조직과 전개', score:11, max:15, text:'시간 순서를 더 분명히 하면 좋겠다.'}, {label:'표현과 규범', score:21, max:25, text:'표현은 자연스러우나 문장이 짧게 끊긴다.'} ],
+      paras:['바다를 처음 본 감상이 진솔하게 드러난다.','조개껍데기를 줍는 장면에 구체성을 더하면 좋겠다.','여정의 순서를 시간대별로 정리하면 좋겠다.'],
+      overall:'첫 바다 경험의 설렘이 잘 드러난다. 여정을 시간 순서대로 정리하고 감각적 묘사를 더하면 완성도가 높아지겠다.' },
+    { no:6, memberLabel:'학습회원', memberNo:'0023451235', name:'손희진', title:'우리 반 소개 설명문', genre:'설명문', grade:'3학년', score:88, date:'2026.06.15',
+      text:'우리 반은 모두 22명이다. 매주 월요일에는 학급 회의를 하고, 금요일에는 독서 시간이 있다. 우리 반 친구들은 모두 사이가 좋다.',
+      areas:[ {label:'주제·목적 적합성', score:22, max:25, text:'우리 반을 소개하는 목적에 잘 맞는다.'}, {label:'내용 완성도', score:30, max:35, text:'구체적인 정보(인원, 활동)를 잘 제시했다.'}, {label:'조직과 전개', score:13, max:15, text:'요일별 활동 순서로 자연스럽게 이어진다.'}, {label:'표현과 규범', score:23, max:25, text:'문장이 간결하고 이해하기 쉽다.'} ],
+      paras:['반 인원수를 먼저 밝혀 명확하게 시작했다.','요일별 활동을 구체적으로 설명했다.','마무리에 반의 분위기를 덧붙여 훈훈하다.'],
+      overall:'짜임새 있는 구성과 구체적인 정보 제시가 돋보이는 설명문이다.' }
+  ];
+
+  var rowsEl = document.getElementById('submissionRows');
+  submissions.forEach(function(s){
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-center">' + s.no + '</td>' +
+      '<td><span class="badge">' + s.memberLabel + '</span></td>' +
+      '<td>' + s.memberNo + '</td>' +
+      '<td>' + s.name + '</td>' +
+      '<td>' + s.title + '</td>' +
+      '<td class="col-center score">' + s.score + '점</td>' +
+      '<td>' + s.date + '</td>' +
+      '<td class="col-center"><button class="btn-report" data-no="' + s.no + '">결과리포트 보기</button></td>';
+    rowsEl.appendChild(tr);
+  });
+
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    item.addEventListener('click', function(){
+      document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+      item.classList.add('active');
+      document.querySelectorAll('.view').forEach(function(v){ v.style.display = 'none'; });
+      document.getElementById('view-' + item.dataset.target).style.display = 'block';
+    });
+  });
+
+  function areaBarStyle(a){ return 'width:' + Math.round(a.score / a.max * 100) + '%'; }
+
+  function openReport(no){
+    var s = submissions.find(function(x){ return x.no === no; });
+    if (!s) return;
+    document.getElementById('reportModalTitle').textContent = s.name + ' 님 결과리포트';
+    var areasHtml = s.areas.map(function(a){
+      return '<div class="area-item">' +
+        '<div class="arow"><span class="area-chip">' + a.label + '</span><span class="area-score">' + a.score + ' / ' + a.max + '점</span></div>' +
+        '<div class="area-bar-track"><div class="area-bar-fill" style="' + areaBarStyle(a) + '"></div></div>' +
+        '<div class="area-text">' + a.text + '</div>' +
+      '</div>';
+    }).join('');
+    var parasHtml = s.paras.map(function(p, i){
+      return '<div class="para-item"><div class="pnum">' + (i+1) + '문단</div><div class="ptext">' + p + '</div></div>';
+    }).join('');
+    document.getElementById('reportModalBody').innerHTML =
+      '<div class="score-card">' +
+        '<div class="stitle">' + s.title + ' &middot; ' + s.grade + ' &middot; ' + s.genre + '</div>' +
+        '<div class="sbig">' + s.score + '<span>/ 100점</span></div>' +
+      '</div>' +
+      '<div class="submitted-box"><div class="label">제출한 글</div><div class="text">' + s.text + '</div></div>' +
+      '<div class="section-title">영역별 진단</div>' + areasHtml +
+      '<div class="section-title">문단별 피드백</div>' + parasHtml +
+      '<div class="overall-box"><div class="otitle">전체 총평</div><div class="otext">' + s.overall + '</div></div>';
+    document.getElementById('reportOverlay').classList.add('open');
+  }
+
+  rowsEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.btn-report');
+    if (!btn) return;
+    openReport(parseInt(btn.dataset.no, 10));
+  });
+
+  document.getElementById('reportModalClose').addEventListener('click', function(){
+    document.getElementById('reportOverlay').classList.remove('open');
+  });
+  document.getElementById('reportOverlay').addEventListener('click', function(e){
+    if (e.target === this) this.classList.remove('open');
+  });
+</script>
+</body>
+</html>
