@@ -3,9 +3,9 @@
     {
       "source": "/",
       "has": [
-        { "type": "host", "value": "general-writting-lms.vercel.app" }
+        { "type": "host", "value": "general-writing-cms.vercel.app" }
       ],
-      "destination": "/teacher.html"
+      "destination": "/cms.html"
     }
   ]
 }
