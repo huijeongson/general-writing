@@ -125,7 +125,6 @@
                   <th>제출 일시</th>
                   <th>제출 상태</th>
                   <th>AI 점수(가칭)</th>
-                  <th>교사 점수</th>
                 </tr>
               </thead>
               <tbody id="diagnosisRows"></tbody>
@@ -144,12 +143,12 @@
 
 <script>
   var rows = [
-    { name:'김민준', title:'어린왕자 독서감상문', grade:'2학년', genre:'독서감상문', date:'2025-05-12 16:45', status:'평가 완료', ai:'85점', teacher:'88점' },
-    { name:'이서연', title:'봄비 (시 창작)', grade:'1학년', genre:'시 창작', date:'2025-05-13 14:20', status:'제출 완료', ai:'-', teacher:'-' },
-    { name:'박지훈', title:'인물의 심리를 분석하는 소설 쓰기', grade:'3학년', genre:'이야기 창작', date:'2025-05-14 10:15', status:'제출 완료', ai:'-', teacher:'-' },
-    { name:'최수진', title:'봉사활동 후기', grade:'2학년', genre:'일기·생활문', date:'-', status:'작성 중', ai:'-', teacher:'-' },
-    { name:'정예준', title:'물의 세 가지 상태 (설명문)', grade:'1학년', genre:'설명문', date:'-', status:'미제출', ai:'-', teacher:'-' },
-    { name:'손희정', title:'가족 여행 기행문', grade:'3학년', genre:'기행문', date:'2025-05-11 09:40', status:'평가 완료', ai:'80점', teacher:'82점' }
+    { name:'김민준', title:'어린왕자 독서감상문', grade:'2학년', genre:'독서감상문', date:'2025-05-12 16:45', status:'평가 완료', ai:'85점' },
+    { name:'이서연', title:'봄비 (시 창작)', grade:'1학년', genre:'시 창작', date:'2025-05-13 14:20', status:'제출 완료', ai:'-' },
+    { name:'박지훈', title:'인물의 심리를 분석하는 소설 쓰기', grade:'3학년', genre:'이야기 창작', date:'2025-05-14 10:15', status:'제출 완료', ai:'-' },
+    { name:'최수진', title:'봉사활동 후기', grade:'2학년', genre:'일기·생활문', date:'-', status:'작성 중', ai:'-' },
+    { name:'정예준', title:'물의 세 가지 상태 (설명문)', grade:'1학년', genre:'설명문', date:'-', status:'미제출', ai:'-' },
+    { name:'손희정', title:'가족 여행 기행문', grade:'3학년', genre:'기행문', date:'2025-05-11 09:40', status:'평가 완료', ai:'80점' }
   ];
 
   var statusClass = { '평가 완료':'status-done', '제출 완료':'status-submitted', '작성 중':'status-writing', '미제출':'status-none' };
@@ -164,8 +163,7 @@
       '<td>' + r.genre + '</td>' +
       '<td>' + r.date + '</td>' +
       '<td><span class="status-pill ' + statusClass[r.status] + '">' + r.status + '</span></td>' +
-      '<td>' + r.ai + '</td>' +
-      '<td>' + r.teacher + '</td>';
+      '<td>' + r.ai + '</td>';
     rowsEl.appendChild(tr);
   });
 
