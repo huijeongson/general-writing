@@ -3,7 +3,7 @@
     {
       "source": "/",
       "has": [
-        { "type": "host", "value": "general-writing-cms.vercel.app" }
+        { "type": "host", "value": "general-writting-cms.vercel.app" }
       ],
       "destination": "/cms.html"
     }
