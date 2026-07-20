@@ -51,6 +51,10 @@
   .status-writing { background:#FEF6E0; color:#B7860B; }
   .status-none { background:#EEF0F3; color:#8A929E; }
 
+  .member-badge { display:inline-block; font-size:11.5px; font-weight:700; padding:3px 10px; border-radius:999px; }
+  .member-student { background:#EAF1FE; color:#2563EB; }
+  .member-general { background:#EEF0F3; color:#6B7480; }
+
   .pagination { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:22px; }
   .pagination button { width:32px; height:32px; border-radius:8px; border:1px solid #E1E5EA; background:#fff; color:#5A6472; font-size:13px; font-weight:600; cursor:pointer; }
   .pagination button.active { background:#2563EB; border-color:#2563EB; color:#fff; }
@@ -119,6 +123,7 @@
               <thead>
                 <tr>
                   <th>학생명</th>
+                  <th>회원구분</th>
                   <th>과제명</th>
                   <th>학년</th>
                   <th>장르</th>
@@ -143,21 +148,23 @@
 
 <script>
   var rows = [
-    { name:'김민준', title:'어린왕자 독서감상문', grade:'2학년', genre:'독서감상문', date:'2025-05-12 16:45', status:'평가 완료', ai:'85점' },
-    { name:'이서연', title:'봄비 (시 창작)', grade:'1학년', genre:'시 창작', date:'2025-05-13 14:20', status:'제출 완료', ai:'-' },
-    { name:'박지훈', title:'인물의 심리를 분석하는 소설 쓰기', grade:'3학년', genre:'이야기 창작', date:'2025-05-14 10:15', status:'제출 완료', ai:'-' },
-    { name:'최수진', title:'봉사활동 후기', grade:'2학년', genre:'일기·생활문', date:'-', status:'작성 중', ai:'-' },
-    { name:'정예준', title:'물의 세 가지 상태 (설명문)', grade:'1학년', genre:'설명문', date:'-', status:'미제출', ai:'-' },
-    { name:'손희정', title:'가족 여행 기행문', grade:'3학년', genre:'기행문', date:'2025-05-11 09:40', status:'평가 완료', ai:'80점' }
+    { name:'김민준', memberType:'학습회원', title:'어린왕자 독서감상문', grade:'2학년', genre:'독서감상문', date:'2025-05-12 16:45', status:'평가 완료', ai:'85점' },
+    { name:'이서연', memberType:'학습회원', title:'봄비 (시 창작)', grade:'1학년', genre:'시 창작', date:'2025-05-13 14:20', status:'제출 완료', ai:'-' },
+    { name:'박지훈', memberType:'일반회원', title:'인물의 심리를 분석하는 소설 쓰기', grade:'3학년', genre:'이야기 창작', date:'2025-05-14 10:15', status:'제출 완료', ai:'-' },
+    { name:'최수진', memberType:'학습회원', title:'봉사활동 후기', grade:'2학년', genre:'일기·생활문', date:'-', status:'작성 중', ai:'-' },
+    { name:'정예준', memberType:'일반회원', title:'물의 세 가지 상태 (설명문)', grade:'1학년', genre:'설명문', date:'-', status:'미제출', ai:'-' },
+    { name:'손희정', memberType:'학습회원', title:'가족 여행 기행문', grade:'3학년', genre:'기행문', date:'2025-05-11 09:40', status:'평가 완료', ai:'80점' }
   ];
 
   var statusClass = { '평가 완료':'status-done', '제출 완료':'status-submitted', '작성 중':'status-writing', '미제출':'status-none' };
+  var memberClass = { '학습회원':'member-student', '일반회원':'member-general' };
 
   var rowsEl = document.getElementById('diagnosisRows');
   rows.forEach(function(r){
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + r.name + '</td>' +
+      '<td><span class="member-badge ' + memberClass[r.memberType] + '">' + r.memberType + '</span></td>' +
       '<td>' + r.title + '</td>' +
       '<td>' + r.grade + '</td>' +
       '<td>' + r.genre + '</td>' +
